@@ -16,3 +16,6 @@
 [submodule "core-legacy"]
 	path = core-legacy
 	url = https://github.com/osmandapp/OsmAnd-core
+[submodule "OsmAnd-core"]
+	path = OsmAnd-core
+	url = https://github.com/osmandapp/OsmAnd-core.git
