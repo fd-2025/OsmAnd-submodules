@@ -1,9 +1,6 @@
 [submodule "android"]
 	path = android
 	url = https://github.com/osmandapp/Osmand
-[submodule "tools"]
-	path = tools
-	url = https://github.com/osmandapp/OsmAnd-tools
 [submodule "resources"]
 	path = resources
 	url = https://github.com/osmandapp/OsmAnd-resources
