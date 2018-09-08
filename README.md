@@ -18,5 +18,5 @@ to use for this, we have just been updating to the latest version of the
 [*core_clang* branch][3] at the time of the OsmAnd release.
 
 [1]: https://github.com/osmandapp
-[2]: http://builder.osmand.net:8080/view/OsmAnd%20Builds/job/Osmand-release/lastStableBuild/tagBuild/
+[2]: https://builder.osmand.net:8080/view/OsmAnd%20Builds/job/Osmand-release/lastStableBuild/tagBuild/
 [3]: https://github.com/osmandapp/OsmAnd-core/commits/core_clang
