@@ -12,7 +12,7 @@
 	url = https://github.com/osmandapp/osmandapp.github.io
 [submodule "core-legacy"]
 	path = core-legacy
-	url = https://github.com/osmandapp/OsmAnd-core
+	url = https://github.com/osmandapp/OsmAnd-core-legacy.git
 [submodule "OsmAnd-core"]
 	path = OsmAnd-core
 	url = https://github.com/osmandapp/OsmAnd-core.git
