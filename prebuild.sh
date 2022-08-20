@@ -297,5 +297,11 @@ sed -i \
         android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />!' \
     "$osmand_dir/AndroidManifest.xml"
 
+# CUSTOM: Remove Mapilliary promotion. See !11525, !11480, and #2701.
+
+sed -i \
+    '/MapillaryPlugin/d' \
+    "$osmand_dir/src/net/osmand/plus/mapcontextmenu/builders/cards/NoImagesCard.java"
+
 # return from whence we came (just in case)
 popd
