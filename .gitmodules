@@ -11,5 +11,14 @@
 	path = core-legacy
 	url = https://github.com/osmandapp/OsmAnd-core-legacy.git
 [submodule "OsmAnd-core"]
-	path = OsmAnd-core
+	path = core
 	url = https://github.com/osmandapp/OsmAnd-core.git
+[submodule "MPAndroidChart"]
+	path = MPAndroidChart
+	url = https://github.com/osmandapp/MPAndroidChart.git
+[submodule "icu-release-50-2-1-patched-mirror"]
+	path = icu-release-50-2-1-patched-mirror
+	url = https://gitlab.com/Hague/icu-release-50-2-1-patched-mirror.git
+[submodule "OsmAnd-build"]
+	path = build
+	url = https://github.com/osmandapp/OsmAnd-build
