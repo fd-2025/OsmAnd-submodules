@@ -3,11 +3,9 @@
 # Arguments: the FDroid build script variables:
 #  * $$VERSION$$
 #  * $$VERCODE$$
-#  * $$skia$$ (srclib)
 
 version=$1
 vercode=$2
-skia=$3
 
 # Changes marked
 #   - BUILD: required for FDroid build
@@ -32,7 +30,7 @@ stubs_dir="$script_dir/stubs"
 mpchartlib_dir="$script_dir/MPAndroidChart"
 
 # BUILD: Add enough memory for the build on FDroid
-echo -e "\norg.gradle.jvmargs=-XX:MaxHeapSize=2048m" \
+echo -e "\norg.gradle.jvmargs=-XX:MaxHeapSize=4096m" \
     >> "$android_dir/gradle.properties"
 
 # BUILD: Remove OsmAnd self-hosted ivy binary repository.
@@ -65,12 +63,15 @@ sed -i \
     -e "/play-services-location/d" \
     -e '/MPAndroidChart/d' \
     "$osmand_dir/build-common.gradle"
+sed -i \
+    -e "/.*mplementation.*OsmAndCore.*/d" \
+    -e "/play-services-location/d" \
+    -e '/MPAndroidChart/d' \
+    "$osmand_dir/build-library.gradle"
 
 sed -i \
     -e "/.*com.google.android.play.*/d" \
     "$osmand_dir/build-common.gradle"
-
-rm "$osmand_dir/build-library.gradle"
 
 perl -i -0 -p \
     -e "s|maven \{\n\s*url 'https://developer.huawei.com/repo/'\n\s*}||g" \
@@ -89,6 +90,30 @@ sed -i \
 sed -i \
     -e "/.*com.android.billingclient.*/d" \
     "$osmand_dir/build-common.gradle"
+
+sed -i \
+    -e "/.*antpluginlib.*/d" \
+    "$osmand_dir/build-common.gradle"
+rm -r "$osmand_dir/src/net/osmand/plus/plugins/antplus"
+rm "$osmand_dir/res/xml/antplus_settings.xml"
+sed -i \
+    -e "/.*AntPlus.*/d" \
+    "$osmand_dir/src/net/osmand/plus/plugins/PluginsHelper.java"
+sed -i \
+    -e "s/WEATHER || this == ANT_PLUS/WEATHER/" \
+    "$osmand_dir/src/net/osmand/plus/views/mapwidgets/WidgetGroup.java"
+sed -i \
+    -e "/.*ANT_PLUS.*/d" \
+    "$osmand_dir/src/net/osmand/plus/views/mapwidgets/WidgetGroup.java"
+sed -i \
+    -e "/.*AntPlus.*/d" \
+    "$osmand_dir/src/net/osmand/plus/views/mapwidgets/WidgetGroup.java"
+sed -i \
+    -e "/.*AntPlus.*/d" \
+    "$osmand_dir/src/net/osmand/plus/settings/fragments/BaseSettingsFragment.java"
+sed -i \
+    -e "/.*ANT_PLUS.*/d" \
+    "$osmand_dir/src/net/osmand/plus/views/mapwidgets/WidgetType.java"
 
 # BUILD: Switch OsmAndCore_android to the OpenGL core built in build.sh
 
@@ -147,7 +172,6 @@ sed -i \
 # OsmAnd build, run a checksum test in cases it's not what we expect.
 # First core-legacy, then core.
 
-# BUILD (perhaps not essential): core-legacy: replace skia with srclib,
 # checksum protobuf.
 
 sed -i \
@@ -156,14 +180,6 @@ sed -i \
     | grep 13bfc5ae543cf3aa180ac2485c0bc89495e3ae711fc6fab4f8ffe90dfb4bb677\\\
     || { echo 'Failed checksum' 1>\&2; exit; }/"\
     "$core_legacy_dir/externals/protobuf/configure.sh"
-
-skiapath="$(echo $skia | sed 's/\//\\\//g')"
-sed -i \
-    "/# Download/,+8d" \
-    "$core_legacy_dir/externals/skia/configure.sh"
-sed -i \
-    "s/# Patch/cp -r $skiapath  \$SRCLOC\/upstream.original/" \
-    "$core_legacy_dir/externals/skia/configure.sh"
 
 # BUILD (perhaps not essential): core:
 #   - checksum of tar/zip files for
@@ -181,12 +197,11 @@ sed -i \
 #       - freetype
 #       - gdal
 #       - glm
-#       - harfbuzz
 #       - jpeg
 #       - libarchive
 #       - proj
 #       - qtbase-android
-#       - skia (not using srclib because of build error (diff commit?))
+#       - skia (not using srclib because of build error)
 #   - remove
 #       - qtbase-desktop
 #       - qtbase-ios
@@ -303,5 +318,19 @@ sed -i \
     '/MapillaryPlugin/d' \
     "$osmand_dir/src/net/osmand/plus/mapcontextmenu/builders/cards/NoImagesCard.java"
 
+# BUILD (non-essential): remove signing configs (done by FDroid anyway, but
+# needed for standalone build to succeed).
+
+# first remove signing config opt lines in buildTypes, then delete block of
+# signingConfigs.
+sed -i \
+    -e "/signingConfig signingConfigs\./d" \
+    "$osmand_dir/build.gradle"
+sed -i \
+    -e "/signingConfigs/,+15d" \
+    "$osmand_dir/build.gradle"
+
+
 # return from whence we came (just in case)
 popd
+

@@ -32,22 +32,21 @@ code.
     % cd /mnt/volume
     % setup-volume.sh
 
-Next, run the prebuild script with the OsmAnd version you're building
-and the location of the Skia source. E.g.
+Next, in the OsmAnd-submodules directory, run the prebuild script with the
+OsmAnd version you're building. E.g.
 
-    % ./prebuild.sh "4.2.7" "4207" "/mnt/volume/skia"
+    % ./prebuild.sh "4.2.7" "4207"
 
 ## Build
 
-Then build the external deps. You will need to edit `build.sh` to use
-`./gradlew` instead of `gradle`.
+Then build the external deps.
 
     % ./build.sh
 
 Finally, to build OsmAnd, cd to the app directory and compile.
 
     % cd android/Osmand
-    % ../gradlew assembleAndroidFullOpenglFatRelease
+    % gradle assembleAndroidFullOpenglFatRelease
 
 In total, the process takes about 2.5 hours on my machine.
 

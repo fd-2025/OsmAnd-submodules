@@ -1,10 +1,6 @@
 #!/bin/bash
 
-git clone https://github.com/google/skia.git
-pushd skia
-git checkout android/11-release
-popd
-git clone https://gitlab.com/Hague/OsmAnd-submodules.git
+git clone https://gitlab.com/f-droid-mirrors/OsmAnd-submodules.git
 pushd OsmAnd-submodules
 git submodule init
 git submodule update
