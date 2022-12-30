@@ -97,8 +97,17 @@ sed -i \
 rm -r "$osmand_dir/src/net/osmand/plus/plugins/antplus"
 rm "$osmand_dir/res/xml/antplus_settings.xml"
 sed -i \
+    -e "/.*com.dsi.ant.plugins.antplus.*/d" \
+    "$osmand_dir/AndroidManifest.xml"
+sed -i \
     -e "/.*AntPlus.*/d" \
     "$osmand_dir/src/net/osmand/plus/plugins/PluginsHelper.java"
+sed -i \
+    -e "/.*AntPlus.*/d" \
+    "$osmand_dir/src/net/osmand/plus/settings/fragments/SettingsScreenType.java"
+sed -i \
+    -e "/.*AntPlusPlugin.*/d" \
+    "$osmand_dir/src/net/osmand/plus/views/mapwidgets/WidgetGroup.java"
 sed -i \
     -e "s/WEATHER || this == ANT_PLUS/WEATHER/" \
     "$osmand_dir/src/net/osmand/plus/views/mapwidgets/WidgetGroup.java"
@@ -108,9 +117,6 @@ sed -i \
 sed -i \
     -e "/.*AntPlus.*/d" \
     "$osmand_dir/src/net/osmand/plus/views/mapwidgets/WidgetGroup.java"
-sed -i \
-    -e "/.*AntPlus.*/d" \
-    "$osmand_dir/src/net/osmand/plus/settings/fragments/BaseSettingsFragment.java"
 sed -i \
     -e "/.*ANT_PLUS.*/d" \
     "$osmand_dir/src/net/osmand/plus/views/mapwidgets/WidgetType.java"
