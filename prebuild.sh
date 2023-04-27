@@ -227,7 +227,7 @@ addCheckSum \
     "$core_dir/externals/boost/configure.sh"
 
 addCheckSum \
-    823705472f816df21c8f6aa026dd162b280806838bb55b3432b0fb1fcca7eb86 \
+    6b902ab103843592be5e99504f846ec109c1abb692e85347587f237a4ffa1033 \
     "$core_dir/externals/expat/configure.sh"
 
 addCheckSum \
