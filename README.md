@@ -13,6 +13,8 @@ Repository holding [OsmAnd][1] releases set up with sane submodules and tags.
 
 Update submodules to use commits specified in the [last stable build of OsmAnd][2].
 
+Note: the builder was relocated in July 2023, so build numbers were reset.
+
 ## Notes
 
 1. Note the OsmAnd-core directory does not correspond to the OsmAnd-core in the
@@ -27,7 +29,7 @@ to use for this, we have just been updating to the latest version of the
 4. The icu-release-50-2-1-patched-mirror directory is also not specified in the Jenkins and is a replacement for the pre-built icu4j-49_1_patched.jar file distributed with the OsmAnd source.
 
 [1]: https://github.com/osmandapp
-[2]: https://builder.osmand.net:8080/view/OsmAnd%20Builds/job/Osmand-release/lastStableBuild/tagBuild/
+[2]: https://creator.osmand.net:8080/view/OsmAnd%20Builds/job/Osmand-release/
 [3]: https://github.com/osmandapp/OsmAnd-core/commits/master
 
 ## Runner Notes
