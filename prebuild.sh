@@ -53,7 +53,6 @@ sed -i \
 sed -i \
     -e "s/System.getenv(\"TARGET_APP_NAME\")/\"OsmAnd~\"/g" \
     "$osmand_dir/build.gradle"
-
 # BUILD: Remove upstream non-free code including self-hosted pre-built
 # binaries. In particular, the OsmAnd core renderer and company code for
 # e.g. billing.
@@ -91,35 +90,40 @@ sed -i \
     -e "/.*com.android.billingclient.*/d" \
     "$osmand_dir/build-common.gradle"
 
+# BUILD: remove ANT+ code from sensors framework
 sed -i \
     -e "/.*antpluginlib.*/d" \
     "$osmand_dir/build-common.gradle"
-rm -r "$osmand_dir/src/net/osmand/plus/plugins/antplus"
-rm "$osmand_dir/res/xml/antplus_settings.xml"
+rm -r "$osmand_dir/src/net/osmand/plus/plugins/externalsensors/devices/ant"
+rm -r "$osmand_dir/src/net/osmand/plus/plugins/externalsensors/devices/sensors/ant"
 sed -i \
     -e "/.*com.dsi.ant.plugins.antplus.*/d" \
-    "$osmand_dir/AndroidManifest.xml"
+    "$osmand_dir/src/net/osmand/plus/plugins/externalsensors/DevicesHelper.java"
 sed -i \
-    -e "/.*AntPlus.*/d" \
-    "$osmand_dir/src/net/osmand/plus/plugins/PluginsHelper.java"
+    -e "/.*|| installAntPluginAsked.*/,+13d" \
+    "$osmand_dir/src/net/osmand/plus/plugins/externalsensors/DevicesHelper.java"
 sed -i \
-    -e "/.*AntPlus.*/d" \
-    "$osmand_dir/src/net/osmand/plus/settings/fragments/SettingsScreenType.java"
+    -e "/.*externalsensors.devices.ant.*/d" \
+    "$osmand_dir/src/net/osmand/plus/plugins/externalsensors/DevicesHelper.java"
+# empty scanAntDevices function, currently only if (enabled) func, do before removing antSearchableDevices
 sed -i \
-    -e "/.*AntPlusPlugin.*/d" \
-    "$osmand_dir/src/net/osmand/plus/views/mapwidgets/WidgetGroup.java"
+    -e "/.*if (enable).*/,+18d" \
+    "$osmand_dir/src/net/osmand/plus/plugins/externalsensors/DevicesHelper.java"
 sed -i \
-    -e "s/WEATHER || this == ANT_PLUS/WEATHER/" \
-    "$osmand_dir/src/net/osmand/plus/views/mapwidgets/WidgetGroup.java"
+    -e "/.*antSearchableDevices.*/d" \
+    "$osmand_dir/src/net/osmand/plus/plugins/externalsensors/DevicesHelper.java"
 sed -i \
-    -e "/.*ANT_PLUS.*/d" \
-    "$osmand_dir/src/net/osmand/plus/views/mapwidgets/WidgetGroup.java"
+    -e "/.*case ANT_.*/,+1d" \
+    "$osmand_dir/src/net/osmand/plus/plugins/externalsensors/DevicesHelper.java"
 sed -i \
-    -e "/.*AntPlus.*/d" \
-    "$osmand_dir/src/net/osmand/plus/views/mapwidgets/WidgetGroup.java"
+    -e "s/device instanceof AntAbstractDevice<?>/false/" \
+    "$osmand_dir/src/net/osmand/plus/plugins/externalsensors/DevicesHelper.java"
+
+# COSMETIC: add prohibited to ANT+ since we don't support it
+
 sed -i \
-    -e "/.*ANT_PLUS.*/d" \
-    "$osmand_dir/src/net/osmand/plus/views/mapwidgets/WidgetType.java"
+    -e "s/ANT+/ANT+ (\&#x1F6AB;)/g" \
+    "$osmand_dir"/res/**/strings.xml
 
 # BUILD: Switch OsmAndCore_android to the OpenGL core built in build.sh
 
@@ -134,6 +138,13 @@ sed -i \
     -e "s/android {/android { lintOptions { checkReleaseBuilds false }/" \
     "$mpchartlib_dir/MPChartLib/build.gradle"
 rm -r "$mpchartlib_dir/MPChartExample"
+
+# BUILD: MPChartLib needs publishing to builder.osmand.net removing
+# The site no longer exists and it causes dependency resolution errors even
+# though not needed.
+
+sed -i -e "/.*ivy {/,+6d" "$mpchartlib_dir/build.gradle"
+sed -i -e "/.*afterEvaluate {/,+24d" "$mpchartlib_dir/MPChartLib/build.gradle"
 
 # BUILD: Use legacy packaging else installation will fail with native
 # libs error (-2)
@@ -178,7 +189,7 @@ sed -i \
 # OsmAnd build, run a checksum test in cases it's not what we expect.
 # First core-legacy, then core.
 
-# checksum protobuf.
+# checksum protobuf
 
 sed -i \
     "s/# Extract/\
@@ -227,7 +238,7 @@ addCheckSum \
     "$core_dir/externals/boost/configure.sh"
 
 addCheckSum \
-    823705472f816df21c8f6aa026dd162b280806838bb55b3432b0fb1fcca7eb86 \
+    6b902ab103843592be5e99504f846ec109c1abb692e85347587f237a4ffa1033 \
     "$core_dir/externals/expat/configure.sh"
 
 addCheckSum \
