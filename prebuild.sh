@@ -233,6 +233,11 @@ function addCheckSum() {
         "$file"
 }
 
+# BUILD jfrog.io Boost account down at time of testing, trying another mirror (with same checksum). May be able to revert this line once Boost reactivates the jfrog account.
+
+sed -i "s/https.*jfrog.io.*boost_1_69_0.tar.bz2/https:\/\/downloads.sourceforge.net\/project\/boost\/boost\/1.69.0\/boost_1_69_0.tar.bz2/" \
+    "$core_dir/externals/boost/configure.sh"
+
 addCheckSum \
     8f32d4617390d1c2d16f26a27ab60d97807b35440d45891fa340fc2648b04406 \
     "$core_dir/externals/boost/configure.sh"
@@ -280,7 +285,7 @@ rm -rf "$core_dir/externals/qtbase-ios"
 # needed.
 
 cp "$stubs_dir/RateUsHelper.java" \
-    "$osmand_dir/src/net/osmand/plus/helpers/RateUsHelper.java"
+    "$osmand_dir/src/net/osmand/plus/feedback/RateUsHelper.java"
 cp "$stubs_dir/InAppPurchaseHelperImpl.java" \
     "$osmand_dir/src-google/net/osmand/plus/inapp/InAppPurchaseHelperImpl.java"
 
@@ -347,6 +352,33 @@ sed -i \
     -e "/signingConfigs/,+15d" \
     "$osmand_dir/build.gradle"
 
+# BUILD: alter dummy ExcludeTLongObjectMap that uses the custom version of GNU
+# Trove4j that is normally distributed as a binary .jar file. They changed the
+# interface a little, so their dummy class overrides their custom interface.
+# Change it back to the normal GNU Trove4j interface. Note, the binary .jar
+# file also includes the source code. So we may want to -- in future -- extract
+# the Java files and work it into the compile process.
+
+excludetlongobjectmap="$osmand_java_dir/src/main/java/net/osmand/router/ExcludeTLongObjectMap.java"
+
+sed -i \
+    -e "s/forEachValue(TObjectProcedure<T>/forEachValue(TObjectProcedure<? super T>/" \
+    $excludetlongobjectmap
+sed -i \
+    -e "s/forEachValue(TLongObjectProcedure<T>/forEachValue(TLongObjectProcedure<? super T>/" \
+    $excludetlongobjectmap
+sed -i \
+    -e "s/forEachEntry(TLongObjectProcedure<T>/forEachEntry(TLongObjectProcedure<? super T>/" \
+    $excludetlongobjectmap
+sed -i \
+    -e "s/retainEntries(TLongObjectProcedure<T>/retainEntries(TLongObjectProcedure<? super T>/" \
+    $excludetlongobjectmap
+sed -i \
+    -e "s/putAll(TLongObjectMap<T>/putAll(TLongObjectMap<? extends T>/" \
+    $excludetlongobjectmap
+sed -i \
+    -e "s/<T> T\[\] values/T\[\] values/" \
+    $excludetlongobjectmap
 
 # return from whence we came (just in case)
 popd

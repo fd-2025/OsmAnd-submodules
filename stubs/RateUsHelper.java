@@ -1,4 +1,4 @@
-package net.osmand.plus.helpers;
+package net.osmand.plus.feedback;
 
 import net.osmand.plus.OsmandApplication;
 import net.osmand.plus.activities.MapActivity;
@@ -13,13 +13,5 @@ public class RateUsHelper {
         return false;
     }
     public static void showRateDialog(MapActivity mapActivity) { }
-    public enum RateUsState {
-        INITIAL_STATE,
-        IGNORED,
-        LIKED,
-        DISLIKED_WITH_MESSAGE,
-        DISLIKED_WITHOUT_MESSAGE,
-        DISLIKED_OR_IGNORED_AGAIN;
-    }
 }
 
