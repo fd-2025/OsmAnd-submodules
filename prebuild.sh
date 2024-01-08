@@ -6,6 +6,7 @@
 
 version=$1
 vercode=$2
+native_lib_arch=$3
 
 # Changes marked
 #   - BUILD: required for FDroid build
@@ -379,6 +380,90 @@ sed -i \
 sed -i \
     -e "s/<T> T\[\] values/T\[\] values/" \
     $excludetlongobjectmap
+
+# BUILD: Only build release and required arch of native lib, if a matching arch is passed.
+
+if  [[ "$native_lib_arch" == "armv7" ]]
+then
+    sed -i \
+        -e "s/BUILD_TYPE=\$1/BUILD_TYPE=\"release\"/g" \
+        "$core_dir/wrappers/android/build.sh"
+    patch "$core_dir/wrappers/android/build.sh" <<-'EOF'
+	63,83d62
+	< 
+	< buildArch "arm64-v8a"
+	< retcode=$?
+	< if [[ $retcode -ne 0 ]]; then
+	< 	echo "buildArch(arm64-v8a) failed with $retcode, exiting..."
+	< 	exit $retcode
+	< fi
+	< 
+	< buildArch "x86"
+	< retcode=$?
+	< if [[ $retcode -ne 0 ]]; then
+	< 	echo "buildArch(x86) failed with $retcode, exiting..."
+	< 	exit $retcode
+	< fi
+	< 
+	< buildArch "x86_64"
+	< retcode=$?
+	< if [[ $retcode -ne 0 ]]; then
+	<         echo "buildArch(x86_64) failed with $retcode, exiting..."
+	<         exit $retcode
+	< fi
+	EOF
+elif  [[ "$native_lib_arch" == "x86" ]]
+then
+    sed -i \
+        -e "s/BUILD_TYPE=\$1/BUILD_TYPE=\"release\"/g" \
+        "$core_dir/wrappers/android/build.sh"
+    patch "$core_dir/wrappers/android/build.sh" <<-'EOF'
+	57,70d56
+	< buildArch "armeabi-v7a"
+	< retcode=$?
+	< if [[ $retcode -ne 0 ]]; then
+	< 	echo "buildArch(armeabi-v7a) failed with $retcode, exiting..."
+	< 	exit $retcode
+	< fi
+	< 
+	< buildArch "arm64-v8a"
+	< retcode=$?
+	< if [[ $retcode -ne 0 ]]; then
+	< 	echo "buildArch(arm64-v8a) failed with $retcode, exiting..."
+	< 	exit $retcode
+	< fi
+	< 
+	EOF
+elif  [[ "$native_lib_arch" == "arm64" ]]
+then
+    sed -i \
+        -e "s/BUILD_TYPE=\$1/BUILD_TYPE=\"release\"/g" \
+        "$core_dir/wrappers/android/build.sh"
+    patch "$core_dir/wrappers/android/build.sh" <<-'EOF'
+	57,63d56
+	< buildArch "armeabi-v7a"
+	< retcode=$?
+	< if [[ $retcode -ne 0 ]]; then
+	< 	echo "buildArch(armeabi-v7a) failed with $retcode, exiting..."
+	< 	exit $retcode
+	< fi
+	< 
+	71,83d63
+	< buildArch "x86"
+	< retcode=$?
+	< if [[ $retcode -ne 0 ]]; then
+	< 	echo "buildArch(x86) failed with $retcode, exiting..."
+	< 	exit $retcode
+	< fi
+	< 
+	< buildArch "x86_64"
+	< retcode=$?
+	< if [[ $retcode -ne 0 ]]; then
+	<         echo "buildArch(x86_64) failed with $retcode, exiting..."
+	<         exit $retcode
+	< fi
+	EOF
+fi
 
 # return from whence we came (just in case)
 popd
