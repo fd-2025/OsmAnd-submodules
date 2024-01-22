@@ -234,11 +234,6 @@ function addCheckSum() {
         "$file"
 }
 
-# BUILD jfrog.io Boost account down at time of testing, trying another mirror (with same checksum). May be able to revert this line once Boost reactivates the jfrog account.
-
-sed -i "s/https.*jfrog.io.*boost_1_69_0.tar.bz2/https:\/\/downloads.sourceforge.net\/project\/boost\/boost\/1.69.0\/boost_1_69_0.tar.bz2/" \
-    "$core_dir/externals/boost/configure.sh"
-
 addCheckSum \
     8f32d4617390d1c2d16f26a27ab60d97807b35440d45891fa340fc2648b04406 \
     "$core_dir/externals/boost/configure.sh"
