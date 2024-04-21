@@ -29,6 +29,7 @@ core_legacy_dir="$script_dir/core-legacy"
 core_dir="$script_dir/core"
 stubs_dir="$script_dir/stubs"
 mpchartlib_dir="$script_dir/MPAndroidChart"
+icu_dir="$script_dir/icu-release-50-2-1-patched-mirror"
 
 # BUILD: Add enough memory for the build on FDroid
 echo -e "\norg.gradle.jvmargs=-XX:MaxHeapSize=4096m" \
@@ -139,6 +140,21 @@ sed -i \
     -e "s/android {/android { lintOptions { checkReleaseBuilds false }/" \
     "$mpchartlib_dir/MPChartLib/build.gradle"
 rm -r "$mpchartlib_dir/MPChartExample"
+
+# BUILD: Remove unused dependencies that are no longer available in the new Gradle version
+sed -i "/com.github.dcendents:android-maven-gradle-plugin/d" "$mpchartlib_dir/build.gradle"
+sed -i "/com.github.dcendents.android-maven/d" "$mpchartlib_dir/MPChartLib/build.gradle"
+
+# BUILD: update Gradle to a version that supports OpenJDK 17
+sed -i "s/6.7.1/7.5.1/g" "$mpchartlib_dir/gradle/wrapper/gradle-wrapper.properties"
+sed -i "s/6.5/7.5.1/g" "$core_dir/wrappers/android/gradle/wrapper/gradle-wrapper.properties"
+
+# BUILD: Set the compile versions for ICU to one supported by OpenJDK 17
+sed -i "s/\^11/\^17/g" "$icu_dir/icu4j/build.xml"
+sed -i "s/javac.source = 1.6/javac.source = 17/g" "$icu_dir/icu4j/main/shared/build/common.properties"
+sed -i "s/javac.target = 1.6/javac.target = 17/g" "$icu_dir/icu4j/main/shared/build/common.properties"
+sed -i "s/javac.source = 1.6/javac.source = 17/g" "$icu_dir/icu4j/main/classes/localespi/build.properties"
+sed -i "s/javac.target = 1.6/javac.target = 17/g" "$icu_dir/icu4j/main/classes/localespi/build.properties"
 
 # BUILD: MPChartLib needs publishing to builder.osmand.net removing
 # The site no longer exists and it causes dependency resolution errors even
@@ -459,6 +475,71 @@ then
 	< fi
 	EOF
 fi
+
+# BUILD: Remove unused uploadArchives that is no longer available in the new Gradle version
+
+patch "$core_dir/wrappers/android/build.gradle" <<-'EOF'
+318,334d317
+< 
+< // Uploading artifacts to local path
+< group = "net.osmand"
+< version = System.getenv("OSMAND_BINARIES_IVY_REVISION") ?: "4.7"
+< uploadArchives {
+<     repositories.ivy {
+<     //    credentials {
+<     //        username ""
+<      //       password ""
+<      //   }
+<         url = System.getenv("OSMAND_BINARIES_IVY_ROOT") ?: "./"
+<         layout "pattern" , {
+<             artifact "[organisation]/[module]/[revision]/[artifact]-[revision].[ext]"
+<         }
+<     }
+< }
+< 
+EOF
+
+patch "$core_dir/wrappers/android/NativeCoreRelease/build.gradle" <<-'EOF'
+63,79d62
+< // Uploading artifacts to local path
+< group = "net.osmand"
+< //archivesBaseName = "OsmAndCore_androidNativeRelease"
+< version = System.getenv("OSMAND_BINARIES_IVY_REVISION") ?: "4.7"
+< uploadArchives {
+<     repositories.ivy {
+<        // credentials {
+<        //     username ""
+<        //     password ""
+<        //  }
+<         url = System.getenv("OSMAND_BINARIES_IVY_ROOT") ?: "./"
+<         layout "pattern" , {
+<             artifact "[organisation]/[module]/[revision]/[artifact]-[revision].[ext]"
+<         }
+<     }
+< }
+< 
+EOF
+
+patch "$core_dir/wrappers/android/NativeCoreDebug/build.gradle" <<-'EOF'
+62,78d61
+< // Uploading artifacts to local path
+< group = "net.osmand"
+< //archivesBaseName = "OsmAndCore_androidNativeDebug"
+< version = System.getenv("OSMAND_BINARIES_IVY_REVISION") ?: "4.7"
+< uploadArchives {
+<     repositories.ivy {
+< //        credentials {
+< //           username ""
+< //          password ""
+< //        }
+<         url = System.getenv("OSMAND_BINARIES_IVY_ROOT") ?: "./"
+<         layout "pattern" , {
+<             artifact "[organisation]/[module]/[revision]/[artifact]-[revision].[ext]"
+<         }
+<     }
+< }
+< 
+EOF
 
 # return from whence we came (just in case)
 popd
