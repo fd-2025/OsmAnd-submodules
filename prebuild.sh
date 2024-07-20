@@ -251,7 +251,7 @@ addCheckSum \
     "$core_dir/externals/expat/configure.sh"
 
 addCheckSum \
-    3a0606fd99fb099572ba1923f556b05b545965359edb92930a658fc99172d962 \
+    d16cae735dc6fd58317cad39cce73f19808a99fa6054fa587bd3d6a3ab621cb4 \
     "$core_dir/externals/geographiclib/configure.sh"
 
 addCheckSum \
