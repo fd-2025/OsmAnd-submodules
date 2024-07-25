@@ -1,0 +1,25 @@
+* Altitude terrain colorization option
+
+* Color schemes for terrain, tracks, and routes
+
+* Profile appearance redesign
+
+* 3D icons for My location
+
+* The new Add action screen of the Quick Actions tool has been updated
+
+* Weather UI has been updated with layer animations and improved label visibility
+
+* Improvements for the 3D track view
+
+* Detailed track guidance for Attach to the roads
+
+* Removed login/password authorization method in OpenStreetMap Editing plugin
+
+* More icons for Favorites
+
+* Added Water category of POIs
+
+* Updates for Compass button
+
+* Optional updates
