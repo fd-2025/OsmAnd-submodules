@@ -1,0 +1,11 @@
+* Nouvelle option de colorisation du relief "Altitude"
+* Palettes de couleurs personnalisées pour le relief, les traces et les itinéraires
+* Variante 3D pour les icônes de position
+* Les actions rapides peuvent désormais être assignées à des claviers externes
+* Météo : rafraîchissement de l'interface utilisateur, ajout d'une animation du vent
+* Amélioration des traces 3D : nouvelles options de visualisation et de colorisation
+* Sélection élargie d'itinéraires touristiques sur la carte
+* Ajout d'une option de thème d'application pour suivre le mode carte
+* Correction des statistiques des traces, du tri et de la recherche
+* Édition OSM : suppression de la méthode d'authentification par login / mot de passe
+* Passage à l'écran de partage du système à partir d'Android 14

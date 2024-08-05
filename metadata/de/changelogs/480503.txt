@@ -1,0 +1,11 @@
+* Neue Geländefarboption „Höhe“
+* Benutzerdefinierte Farbpaletten für Gelände, Tracks und Routen
+* 3D-Variante für Standortpositionssymbole
+* Schnellaktionen können jetzt externen Tastaturen zugewiesen werden
+* Wetter: Benutzeroberfläche aktualisiert, Windanimation hinzugefügt
+* 3D-Track-Verbesserungen: neue Visualisierungs- und Farboptionen
+* Erweiterte Auswahl an Touristenrouten auf der Karte
+* App-Darstellungsoption hinzugefügt, um dem Kartenmodus zu folgen
+* Track-Statistiken, Sortierung und Suche korrigiert
+* OSM-Bearbeitung: Login-/Passwort-Authentifizierungsmethode gelöscht
+* Wechsel zum System-Share-Sheet ab Android 14
