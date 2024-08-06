@@ -384,6 +384,10 @@ sed -i \
     -e "s/<T> T\[\] values/T\[\] values/" \
     $excludetlongobjectmap
 
+# CUSTOM: Fixes the "INSTALL_FAILED_DUPLICATE_PERMISSION" issue, when trying to install additional variants of OsmAnd
+
+sed -i "s/\"net.osmand.SERVICE_PERMISSION\"/\"net.osmand.plus.SERVICE_PERMISSION\"/g" "$osmand_dir/AndroidManifest.xml"
+
 # BUILD: Only build release and required arch of native lib, if a matching arch is passed.
 
 if  [[ "$native_lib_arch" == "armv7" ]]
