@@ -1,1 +1,1 @@
-Global Mobile Harta Imagine si de navigare pentru offline și online Hărți OSM
+Vizualizare și navigare pe mobil, pe baza hărților online sau offline OSM
