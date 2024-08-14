@@ -1,0 +1,11 @@
+* New terrain colorization option "Altitude"
+* Custom color palettes for terrain, tracks, and routes
+* 3D variant for location position icons
+* Quick Actions can now be assigned to external keyboards
+* Weather: UI refresh, added wind animation
+* 3D Track Improvements: new visualization and colorization options
+* Expanded selection of tourist routes on the map
+* Added app theme option to follow map mode
+* Fixed track stats, sorting & search
+* OSM Editing: deleted login / password authorization method
+* Switching to system share sheet starting Android 14
