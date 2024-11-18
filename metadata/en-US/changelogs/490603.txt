@@ -1,0 +1,12 @@
+* Real-Time Turn & Lane Indicators. Added a group of widgets to the top and bottom panels for real-time updates on upcoming turns and lane info.
+* Gallery viewer. Full-screen view for Wikimedia images.
+* Vehicle Metrics plugin. Monitor vehicle performance via OBD-II protocol.
+* Track activities. Assign and filter tracks by activities.
+* Customizable map buttons. Adjust appearance with a precise grid.
+* Widget Context menu. Includes a Reset average speed action.
+* Quick Action updates. Added new quick action for touchscreen lock, trip recording, and control the visibility of OSM Edits.
+* Dirt Bike trails. New route layer for off-road biking.
+* Surrounding areas info. Displays information about areas around a selected point.
+* Interactive access points. Display access or other road and path attributes with a single tap.
+* Hiking trails difficulty grade. Renamed from Difficulty classification.
+* Custom graph display for GPX tracks. Improved the track graph, allowing you to select any available data type for the graph on the Trip recording screen.
