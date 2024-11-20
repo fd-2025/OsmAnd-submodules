@@ -1,0 +1,14 @@
+* Ajout d'une visionneuse de galerie plein écran pour les images Wikimédia
+* Introduction d'un nouveau plugin "Relevés du véhicule" pour surveiller les performances du véhicule en utilisant le protocole OBD-II
+* Ajout de la possibilité d'assigner des activités aux traces et de les filtrer en conséquence
+* Implémentation de nouvelles actions rapides pour l'enregistrement des trajets et le verrouillage de l'écran tactile
+* Introduction d'un de bouton de carte personnalisable et d'une grille précise
+* Ajout d'un menu contextuel et d'une action "Réinitialiser la vitesse moyenne" aux widgets
+* Ajout d'une nouvelle couche d'itinéraire "Sentiers de terre pour vélos"
+* Correction de l'erreur "Auto-enregistrement de la trace pendant la navigation"
+* Correction du problème avec les coordonnées inversées en RTL
+* Correction des données manquantes du capteur pour la trace actuellement enregistrée
+* Ajout d'informations sur les zones environnantes pour le point sélectionné
+* Ajout d'une action rapide pour contrôler la visibilité des modifications OSM
+* Séparation des paramètres de visibilité pour les options de coloration du terrain
+* Ajout d'une icône tactile pour afficher l'accès ou d'autres attributs des routes ou des sentiers
