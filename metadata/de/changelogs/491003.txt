@@ -1,0 +1,14 @@
+* Vollbild-Galerie-Viewer für Wikimedia-Bilder hinzugefügt
+* Neue Erweiterung „Fahrzeugdaten“ zur Überwachung der Fahrzeugleistung unter Verwendung des OBD-II-Protokolls eingeführt
+* Möglichkeit hinzugefügt, Aktivitäten zu Spuren zuzuordnen und sie entsprechend zu filtern
+* Neue Schnellaktionen für die Aufzeichnung von Fahrten und die Touchscreen-Sperre implementiert
+* Anpassbare Kartenschaltfläche und präzises Raster eingeführt
+* Kontextmenü und Aktion „Durchschnittsgeschwindigkeit zurücksetzen“ zu Widgets hinzugefügt
+* Neue Routenebene „Dirtbike-Strecken“ hinzugefügt
+* „Automatische Aufzeichnung des Tracks während der Navigation“ korrigiert
+* Problem mit umgedrehten Koordinaten in RTL behoben
+* Fehlende Sensordaten für die aktuell aufgezeichnete Strecke behoben
+* Informationen über die Umgebung des ausgewählten Punktes hinzugefügt
+* Schnellaktion zur Kontrolle der Sichtbarkeit von OSM-Bearbeitungen hinzugefügt
+* Sichtbarkeitsparameter für die Terrain-Einfärbungsoptionen separiert
+* Antippbares Symbol hinzugefügt, um Zufahrtswege oder andere Straßen- oder Pfadattribute anzuzeigen
