@@ -22,6 +22,7 @@ set -e
 script_dir="$(dirname -- "$( readlink -f -- "$0"; )")";
 pushd "$script_dir"
 
+build_dir="$script_dir/build"
 android_dir="$script_dir/android"
 osmand_dir="$android_dir/OsmAnd"
 osmand_java_dir="$android_dir/OsmAnd-java"
@@ -30,6 +31,12 @@ core_dir="$script_dir/core"
 stubs_dir="$script_dir/stubs"
 mpchartlib_dir="$script_dir/MPAndroidChart"
 icu_dir="$script_dir/icu-release-50-2-1-patched-mirror"
+
+# BUILD: Install the Android SDK Platform API level 31, which is required for qtbase-android (OsmAnd core).
+sdkmanager "platforms;android-31"
+
+# BUILD: Add the ANDROID_SDK export because the auto-detection in src/corelib/Qt5AndroidSupport.cmake (qtbase-android) fails. This is due to our SDK/NDK paths being structured as .../sdk/ndk/<ndk-version>, whereas .../sdk/ndk is expected.
+sed -i '/set(ANDROID_SDK_BUILD_TOOLS_REVISION "$ENV{ANDROID_SDK_BUILD_TOOLS_REVISION}")/a set(ANDROID_SDK "$ENV{ANDROID_HOME}" CACHE STRING "Android SDK path")' "$build_dir/targets/android-ndk-clang.cmake"
 
 # BUILD: Add enough memory for the build on FDroid
 echo -e "\norg.gradle.jvmargs=-XX:MaxHeapSize=4096m" \

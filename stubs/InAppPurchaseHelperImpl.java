@@ -13,6 +13,7 @@ public class InAppPurchaseHelperImpl extends InAppPurchaseHelper {
         @NonNull final Activity activity,
         @Nullable final InAppPurchaseInitCallback callback
     ) { }
+    public String getPlatform() { return PLATFORM_GOOGLE; }
     protected void execImpl(
         @NonNull final InAppPurchaseTaskType taskType,
         @NonNull final InAppCommand runnable

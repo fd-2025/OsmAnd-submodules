@@ -1,0 +1,14 @@
+* Entdecken Sie top-bewertete POIs im neuen Erkundungsmodus
+* Alle OSM-Routen jetzt durchsuchbar! Wandern, Radfahren, MTB und mehr
+* Neues Navigations-Widget kombiniert Abbiegepfeil und Navigationsanweisungen
+* Widget für aktuelle Routeninformationen: zeigt ETA, Ankunftszeit und Entfernung an
+* Wählen Sie Skipisten und MTB-Strecken auf der Karte für detaillierte Informationen aus
+* Möglichkeit, die Widget-Größe für linke und rechte Bedienfelder auszuwählen
+* "Koordinatennetz" mit geografischen Koordinaten hinzugefügt
+* Möglichkeit hinzugefügt, das Standardaussehen von Favoritengruppen anzupassen
+* Android Auto: ETA und Entfernung zum nächsten Wegpunkt anzeigen; Städtenamen erscheinen jetzt in Suchergebnissen
+* Markante Gipfel sind jetzt über Karte und Suche auffindbar
+* Berggipfelhöhen in Fuß
+* Hinzugefügt: Felsen und Klettergebiete auf der Karte
+* Adresssuche in den USA wurde verbessert
+* Hebräische TTS für Navigation hinzugefügt
