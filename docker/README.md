@@ -35,18 +35,22 @@ code.
 Next, in the OsmAnd-submodules directory, run the prebuild script with the
 OsmAnd version you're building. E.g.
 
-    % ./prebuild.sh "4.2.7" "4207"
+    % ./prebuild.sh "4.2.7" "4207" arm64
+
+The final argument can be one of armv7, x86, arm64 or empty for all flavours.
 
 ## Build
 
-Then build the external deps.
+Then build the external deps with the arch parameter if you used one for the prebuild (be consistent, else the OpenGL renderer probably won't work).
 
-    % ./build.sh
+    % ./build.sh arm64
 
 Finally, to build OsmAnd, cd to the app directory and compile.
 
     % cd android/Osmand
-    % gradle assembleAndroidFullOpenglFatRelease
+    % gradle assembleAndroidFullOpenglArm64Release
+
+Change Arm64 for Armv7 or X86 or Fat as required.
 
 In total, the process takes about 2.5 hours on my machine.
 
