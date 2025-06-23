@@ -1,0 +1,7 @@
+* Ajout du support des achats en ligne et multiplateformes
+* Déplacement des unités de température dans les paramètres généraux pour un accès facilité
+* Ajout d’un indicateur de niveau de batterie pour les capteurs BLE
+* Nouvelle interface plus intuitive pour la sélection de points dans Navigation
+* Amélioration de la visibilité des widgets grâce à un nouveau contour
+* Ajout d’un analyseur de Montées/Descentes
+* Extension de l’intégration Wikipedia & Wikivoyage pour davantage de POI.

@@ -138,8 +138,8 @@ sed -i \
 
 sed -i \
     -e "/opengldebugImplementation.*OsmAndCore.*/d" \
-    -e "s!openglImplementation.*OsmAndCore_androidNativeRelease.*!openglImplementation files('libs/OsmAndCore_androidNativeRelease-release.aar')!" \
-    -e "s!openglImplementation.*OsmAndCore_android:.*!openglImplementation files('libs/OsmAndCore_android-release.aar')!" \
+    -e "s!openglImplementation.*OsmAndCore_androidNativeRelease.*!openglImplementation\", files(\"libs/OsmAndCore_androidNativeRelease-release.aar\"))!" \
+    -e "s!openglImplementation.*OsmAndCore_android:.*!openglImplementation\", files(\"libs/OsmAndCore_android-release.aar\"))!" \
     "$osmand_dir/build.gradle"
 
 # BUILD: MPChartLib needs a bit a hack because of a gradle version issue
