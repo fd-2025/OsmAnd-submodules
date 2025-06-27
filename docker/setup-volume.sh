@@ -3,9 +3,15 @@
 git clone https://gitlab.com/f-droid-mirrors/OsmAnd-submodules.git
 pushd OsmAnd-submodules
 git submodule init
-git submodule update
+git submodule update --depth 1
+
+# rm
+rm -Rf android/OsmAnd-java/libs/*.jar
+rm -Rf android/OsmAnd/libs/*.jar
+rm -Rf android/OsmAnd-telegram/
+rm -Rf help/website/images/features.zip
+rm -Rf resources/icons/tools/SVGtoXML/vd-tool
+rm -Rf resources/test-resources/
 popd
 
-echo 'Now run OsmAnd-submodules/prebuild.sh <version name> <version code> "/path/to/skia"'
-echo 'And then OsmAnd-submodules/build.sh'
-echo 'And then in OsmAnd-submodules/android/OsmAnd run ../gradlew assembleRelease'
+echo 'Proceed as described in the README.'
