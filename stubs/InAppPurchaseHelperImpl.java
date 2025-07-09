@@ -34,6 +34,7 @@ public class InAppPurchaseHelperImpl extends InAppPurchaseHelper {
         return null;
     }
     protected boolean isBillingManagerExists() { return false; }
+    protected boolean isBillingUnavailable() { return true; }
     protected void destroyBillingManager() { }
 }
 
