@@ -13,7 +13,7 @@ RUN mkdir ${FDROIDSERVER}
 RUN curl --silent https://gitlab.com/fdroid/fdroidserver/-/archive/master/fdroidserver-master.tar.gz | tar -xz --directory=${FDROIDSERVER} --strip-components=1
 RUN sdkmanager "platform-tools" "build-tools;31.0.0"
 RUN apt-get update || apt-get update
-RUN apt-get install --yes openjdk-17-jdk-headless g++ clang gradle vim build-essential python-is-python3 wget automake libpcre2-dev byacc swig cmake zip
+RUN apt-get install --yes ant openjdk-17-jdk-headless g++ clang gradle vim build-essential python-is-python3 wget automake libpcre2-dev byacc swig cmake zip
 RUN update-alternatives --auto java
 WORKDIR /
 RUN curl "https://dl.google.com/android/repository/android-ndk-r23c-linux.zip" --output android-ndk-r23c-linux.zip
