@@ -5,8 +5,8 @@ Repository holding [OsmAnd][1] releases set up with sane submodules and tags.
 ## Contents
 
 * Submodules used to build OsmAnd.
-* `prebuild.sh` -- the prebuild script for the FDroid build.
-* `build.sh` -- the build script for the FDroid build.
+* `prebuild.sh` -- the prebuild script for the F-Droid build.
+* `build.sh` -- the build script for the F-Droid build.
 * `stubs` -- source code files used to stub parts of the OsmAnd code when the upstream code uses non-free libraries that are not easily removed.
 
 ## Updating
@@ -17,16 +17,25 @@ Note: the builder was relocated in July 2023, so build numbers were reset.
 
 ## Notes
 
-1. Note the OsmAnd-core directory does not correspond to the OsmAnd-core in the
-Jenkins data linked above (which actually corresponds to the core-legacy
-directory).
-2. The OsmAnd-core directory is needed by F-Droid to build the Java/native
-interface that the standard build process usually downloads as a pre-compiled
-binary. Since we do not know how to determine the correct commit of OsmAnd-core
-to use for this, we have just been updating to the latest version of the
-[*master* branch][3] at the time of the OsmAnd release.
-3. The MPAndroidChart directory is also not specified in the Jenkins, and corresponds to the OsmAnd-modified version of MPAndroidChart we think they use in the upstream build.
-4. The icu-release-50-2-1-patched-mirror directory is also not specified in the Jenkins and is a replacement for the pre-built icu4j-49_1_patched.jar file distributed with the OsmAnd source.
+1. The `OsmAnd-core` directory is needed by F-Droid to build the Java/native interface, which is downloaded as a pre-compiled binary in the upstream build process. To determine the correct commit of `OsmAnd-core`, check the build time of the [last stable build of OsmAnd][2] and select the commit from the most recent `OsmAnd-core` build that occurred just before that time.  
+If a release revision was used in the stable build, refer to:  
+https://creator.osmand.net:8080/view/all/job/OsmAndCore-android-ndk23-release/  
+If the master revision was used in the stable build, refer to:  
+https://creator.osmand.net:8080/view/all/job/OsmAndCore-android-ndk23/
+
+3. To determine the correct commit of `MPAndroidChart`, check the build time of the [last stable build of OsmAnd][2] and select the `MPAndroidChart` commit that occurred just before that time.  
+If a release revision was used in the stable build, refer to:  
+https://creator.osmand.net:8080/view/all/job/OsmAnd-android-lib-release/  
+If the master revision was used in the stable build, refer to:  
+https://creator.osmand.net:8080/view/all/job/OsmAnd-android-lib/  
+
+4. The `icu-release-50-2-1-patched-mirror` directory is not specified in the Jenkins and is a replacement for the pre-built `icu4j-49_1_patched.jar` file distributed with the OsmAnd source.
+   
+5. This process ensures that you are using the exact dependency versions that correspond to the official stable OsmAnd build.
+
+6. The changelog text can be found here:  
+https://github.com/osmandapp/OsmAnd/blob/master/OsmAnd/res/values/strings.xml  
+The relevant string is the one whose name attribute starts with `release_` and ends with the corresponding version number. Changelog texts in other languages can be found in the respective `values-*` folders.
 
 [1]: https://github.com/osmandapp
 [2]: https://creator.osmand.net:8080/view/OsmAnd%20Builds/job/Osmand-release/
@@ -34,7 +43,7 @@ to use for this, we have just been updating to the latest version of the
 
 ## Runner Notes
 
-When submitting updated metadata to FDroid, they usually want to see a successful run of the build on a GitLab runner. Information is available [here][4] on how to set up your own runner.
+When submitting updated metadata to F-Droid, they usually want to see a successful run of the build on a GitLab runner. Information is available [here][4] on how to set up your own runner.
 
 I found a couple of tweaks were necessary to build OsmAnd.
 
@@ -73,15 +82,13 @@ And inside `config.toml` you want
 
 I don't recall creating or populating `config.toml`. Information about it is [here][6].
 
-You will need plenty of free disk space for the runner
-to complete. I think about 75gb at least with the opengl
-core.
+You will need plenty of free disk space (about 75 GB) for the runner to complete, if you are building all flavours (the `fat` build). If you are only building a single flavour (for example `arm64`), the required disk space is much lower, around 28 GB should be sufficient.
 
 ## Local Build
 
 Using the running to test builds is painful as it runs from clean each time and prevents you inspecting the filesystem afterwards. Building locally can also be difficult due to environment constraints (e.g. Arch Linux has too recent a g++ version, and setting up an alternative needs chroot).
 
-See the `docker` directory for a Docker environment where the build can run.
+See the `docker` directory for a Docker environment where the build can run, to make the build process easier.
 
 [4]: https://gitlab.com/fdroid/wiki/-/wikis/Continuous-Integration-(CI)/Running-self-hosted-GitLab-CI-Runner
 [5]: https://docs.gitlab.com/ee/ci/runners/configure_runners.html
