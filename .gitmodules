@@ -4,9 +4,6 @@
 [submodule "resources"]
 	path = resources
 	url = https://github.com/osmandapp/OsmAnd-resources
-[submodule "help"]
-	path = help
-	url = https://github.com/osmandapp/osmandapp.github.io
 [submodule "core-legacy"]
 	path = core-legacy
 	url = https://github.com/osmandapp/OsmAnd-core-legacy.git
