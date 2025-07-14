@@ -1,0 +1,7 @@
+* Unterstützung für Web- und Cross-Plattform-Käufe
+* Temperatureinheiten für einfacheren Zugriff auf Allgemeine Einstellungen verschoben
+* Batteriestandsanzeige für BLE-Sensoren hinzugefügt
+* Neue, intuitivere UI für Punktauswahl in Navigation
+* Verbesserte Widget Sichtbarkeit mit einem neuen Umriss
+* Uphills/Downhills Analysator hinzugefügt
+* Wikipedia & Wikivoyage-Integration für mehr POIs erweitert.

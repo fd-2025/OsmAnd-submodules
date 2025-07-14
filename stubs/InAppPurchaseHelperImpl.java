@@ -9,6 +9,11 @@ import java.lang.ref.WeakReference;
 
 public class InAppPurchaseHelperImpl extends InAppPurchaseHelper {
     public InAppPurchaseHelperImpl(OsmandApplication ctx) { super(ctx); }
+    public boolean isPurchasedLocalFullVersion() { return false; }
+    public boolean isPurchasedLocalDeepContours() { return false; }
+    public boolean isSubscribedToLocalLiveUpdates() { return false; }
+    public boolean isSubscribedToLocalOsmAndPro() { return false; }
+    public boolean isSubscribedToLocalMaps() { return false; }
     public void isInAppPurchaseSupported(
         @NonNull final Activity activity,
         @Nullable final InAppPurchaseInitCallback callback
@@ -34,6 +39,7 @@ public class InAppPurchaseHelperImpl extends InAppPurchaseHelper {
         return null;
     }
     protected boolean isBillingManagerExists() { return false; }
+    protected boolean isBillingUnavailable() { return true; }
     protected void destroyBillingManager() { }
 }
 
