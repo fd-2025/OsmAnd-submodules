@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import net.osmand.plus.OsmandApplication;
+import net.osmand.plus.inapp.InAppPurchases.InAppPurchase.PurchaseOrigin;
 import java.lang.ref.WeakReference;
 
 public class InAppPurchaseHelperImpl extends InAppPurchaseHelper {
