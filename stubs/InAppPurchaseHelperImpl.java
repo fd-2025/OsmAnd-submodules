@@ -28,7 +28,7 @@ public class InAppPurchaseHelperImpl extends InAppPurchaseHelper {
     public void purchaseContourLines(@NonNull Activity activity)
         throws UnsupportedOperationException { }
     public void manageSubscription(
-        @NonNull Context ctx, @Nullable String sku
+        @NonNull Context ctx, @Nullable String sku, @Nullable PurchaseOrigin origin
     ) { }
     protected InAppCommand getPurchaseSubscriptionCommand(
         final WeakReference<Activity> activity,
