@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import net.osmand.plus.OsmandApplication;
+import net.osmand.plus.inapp.InAppPurchases.InAppPurchase.PurchaseOrigin;
 import java.lang.ref.WeakReference;
 
 public class InAppPurchaseHelperImpl extends InAppPurchaseHelper {
@@ -28,7 +29,7 @@ public class InAppPurchaseHelperImpl extends InAppPurchaseHelper {
     public void purchaseContourLines(@NonNull Activity activity)
         throws UnsupportedOperationException { }
     public void manageSubscription(
-        @NonNull Context ctx, @Nullable String sku
+        @NonNull Context ctx, @Nullable String sku, @Nullable PurchaseOrigin origin
     ) { }
     protected InAppCommand getPurchaseSubscriptionCommand(
         final WeakReference<Activity> activity,
