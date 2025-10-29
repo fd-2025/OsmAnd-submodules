@@ -105,29 +105,68 @@ sed -i \
     "$osmand_dir/build-common.gradle"
 rm -r "$osmand_dir/src/net/osmand/plus/plugins/externalsensors/devices/ant"
 rm -r "$osmand_dir/src/net/osmand/plus/plugins/externalsensors/devices/sensors/ant"
-sed -i \
-    -e "/.*com.dsi.ant.plugins.antplus.*/d" \
-    "$osmand_dir/src/net/osmand/plus/plugins/externalsensors/DevicesHelper.java"
-sed -i \
-    -e "/.*|| installAntPluginAsked.*/,+13d" \
-    "$osmand_dir/src/net/osmand/plus/plugins/externalsensors/DevicesHelper.java"
-sed -i \
-    -e "/.*externalsensors.devices.ant.*/d" \
-    "$osmand_dir/src/net/osmand/plus/plugins/externalsensors/DevicesHelper.java"
-# empty scanAntDevices function, currently only if (enabled) func, do before removing antSearchableDevices
-sed -i \
-    -e "/.*if (enable).*/,+18d" \
-    "$osmand_dir/src/net/osmand/plus/plugins/externalsensors/DevicesHelper.java"
-sed -i \
-    -e "/.*antSearchableDevices.*/d" \
-    "$osmand_dir/src/net/osmand/plus/plugins/externalsensors/DevicesHelper.java"
-sed -i \
-    -e "/.*case ANT_.*/,+1d" \
-    "$osmand_dir/src/net/osmand/plus/plugins/externalsensors/DevicesHelper.java"
-sed -i \
-    -e "s/device instanceof AntAbstractDevice<?>/false/" \
-    "$osmand_dir/src/net/osmand/plus/plugins/externalsensors/DevicesHelper.java"
 
+patch "$osmand_dir/src/net/osmand/plus/plugins/externalsensors/DevicesHelper.java" <<-'EOF'
+28,30d27
+< import com.dsi.ant.plugins.antplus.pcc.AntPlusHeartRatePcc;
+< import com.dsi.ant.plugins.antplus.pccbase.AntPluginPcc;
+< 
+42,47d38
+< import net.osmand.plus.plugins.externalsensors.devices.ant.AntAbstractDevice;
+< import net.osmand.plus.plugins.externalsensors.devices.ant.AntBikePowerDevice;
+< import net.osmand.plus.plugins.externalsensors.devices.ant.AntBikeSpeedCadenceDevice;
+< import net.osmand.plus.plugins.externalsensors.devices.ant.AntBikeSpeedDistanceDevice;
+< import net.osmand.plus.plugins.externalsensors.devices.ant.AntHeartRateDevice;
+< import net.osmand.plus.plugins.externalsensors.devices.ant.AntTemperatureDevice;
+90d80
+< 	private List<AntAbstractDevice<?>> antSearchableDevices = new ArrayList<>();
+185,189d174
+< 			case ANT_HEART_RATE -> new AntHeartRateDevice(deviceId);
+< 			case ANT_TEMPERATURE -> new AntTemperatureDevice(deviceId);
+< 			case ANT_BICYCLE_POWER -> new AntBikePowerDevice(deviceId);
+< 			case ANT_BICYCLE_SC -> new AntBikeSpeedCadenceDevice(deviceId);
+< 			case ANT_BICYCLE_SD -> new AntBikeSpeedDistanceDevice(deviceId);
+353c338
+< 		return device instanceof AntAbstractDevice<?>;
+---
+> 		return false;
+408,421d392
+< 		if (activity == null || installAntPluginAsked) {
+< 			return;
+< 		}
+< 		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+< 		builder.setTitle(R.string.ant_missing_dependency);
+< 		builder.setMessage(app.getString(R.string.ant_missing_dependency_descr, AntPlusHeartRatePcc.getMissingDependencyName()));
+< 		builder.setCancelable(true);
+< 		builder.setPositiveButton(R.string.ant_go_to_store, (dialog, which) -> {
+< 			Uri uri = Uri.parse(Version.getUrlWithUtmRef(app, AntPluginPcc.getMissingDependencyPackageName()));
+< 			Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+< 			AndroidUtils.startActivityIfSafe(activity, intent);
+< 		});
+< 		builder.setNegativeButton(R.string.shared_string_cancel, (dialog, which) -> dialog.dismiss());
+< 		builder.create().show();
+615,633d585
+< 		if (enable) {
+< 			antSearchableDevices = Arrays.asList(
+< 					AntTemperatureDevice.createSearchableDevice(),
+< 					AntHeartRateDevice.createSearchableDevice(),
+< 					AntBikeSpeedCadenceDevice.createSearchableDevice(),
+< 					AntBikeSpeedDistanceDevice.createSearchableDevice(app),
+< 					AntBikePowerDevice.createSearchableDevice());
+< 
+< 			for (AntAbstractDevice<?> device : antSearchableDevices) {
+< 				connectDevice(activity, device);
+< 			}
+< 			antScanning = true;
+< 		} else {
+< 			for (AntAbstractDevice<?> device : antSearchableDevices) {
+< 				disconnectDevice(device, false);
+< 			}
+< 			antSearchableDevices = new ArrayList<>();
+< 			antScanning = false;
+< 		}
+
+	EOF
 # COSMETIC: add prohibited to ANT+ since we don't support it
 
 sed -i \
