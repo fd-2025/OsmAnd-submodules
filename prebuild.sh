@@ -165,8 +165,8 @@ patch "$osmand_dir/src/net/osmand/plus/plugins/externalsensors/DevicesHelper.jav
 < 			antSearchableDevices = new ArrayList<>();
 < 			antScanning = false;
 < 		}
+EOF
 
-	EOF
 # COSMETIC: add prohibited to ANT+ since we don't support it
 
 sed -i \
