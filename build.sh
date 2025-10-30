@@ -21,6 +21,8 @@ echo "MPAndroidChart assembleRelease dry run BEGIN"
 gradle assembleRelease --dry-run
 echo "MPAndroidChart assembleRelease dry run END"
 gradle assembleRelease
+echo "list MPAndroidChart aar:"
+ls -la MPChartLib/build/outputs/aar/*.aar
 cp MPChartLib/build/outputs/aar/MPChartLib-release.aar "$osmand_dir/libs/"
 popd
 
@@ -34,6 +36,13 @@ echo "Core assembleRelease dry run BEGIN"
 gradle assembleRelease --dry-run
 echo "Core assembleRelease dry run END"
 gradle build
+echo "list core aar without assembleRelease:"
+ls -la build/outputs/aar/*.aar
+ls -la NativeCore*/build/outputs/aar/*.aar
+gradle assembleRelease
+echo "list core aar with assembleRelease:"
+ls -la build/outputs/aar/*.aar
+ls -la NativeCore*/build/outputs/aar/*.aar
 cp build/outputs/aar/OsmAndCore_android-release.aar "$osmand_dir/libs/"
 cp NativeCoreRelease/build/outputs/aar/OsmAndCore_androidNativeRelease-release.aar "$osmand_dir/libs/"
 popd
