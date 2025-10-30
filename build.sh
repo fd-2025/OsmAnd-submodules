@@ -35,14 +35,14 @@ echo "Core build dry run END"
 echo "Core assembleRelease dry run BEGIN"
 gradle assembleRelease --dry-run
 echo "Core assembleRelease dry run END"
-gradle build
-echo "list core aar without assembleRelease:"
-ls -la build/outputs/aar/*.aar
-ls -la NativeCore*/build/outputs/aar/*.aar
-#gradle assembleRelease
-#echo "list core aar with assembleRelease:"
+#gradle build
+#echo "list core aar without assembleRelease:"
 #ls -la build/outputs/aar/*.aar
 #ls -la NativeCore*/build/outputs/aar/*.aar
+gradle assembleRelease
+echo "list core aar only assembleRelease:"
+ls -la build/outputs/aar/*.aar
+ls -la NativeCore*/build/outputs/aar/*.aar
 cp build/outputs/aar/OsmAndCore_android-release.aar "$osmand_dir/libs/"
 cp NativeCoreRelease/build/outputs/aar/OsmAndCore_androidNativeRelease-release.aar "$osmand_dir/libs/"
 popd
