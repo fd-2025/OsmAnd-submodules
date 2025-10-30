@@ -17,13 +17,22 @@ osmand_java_dir="$script_dir/android/OsmAnd-java"
 # Build MP Android Chart
 
 pushd MPAndroidChart
-gradle build
+echo "MPAndroidChart assembleRelease dry run BEGIN"
+gradle assembleRelease --dry-run
+echo "MPAndroidChart assembleRelease dry run END"
+gradle assembleRelease
 cp MPChartLib/build/outputs/aar/MPChartLib-release.aar "$osmand_dir/libs/"
 popd
 
 # Build OsmAnd core and copy into libs folder
 
 pushd core/wrappers/android/
+echo "Core build dry run BEGIN"
+gradle build --dry-run
+echo "Core build dry run END"
+echo "Core assembleRelease dry run BEGIN"
+gradle assembleRelease --dry-run
+echo "Core assembleRelease dry run END"
 gradle build
 cp build/outputs/aar/OsmAndCore_android-release.aar "$osmand_dir/libs/"
 cp NativeCoreRelease/build/outputs/aar/OsmAndCore_androidNativeRelease-release.aar "$osmand_dir/libs/"
