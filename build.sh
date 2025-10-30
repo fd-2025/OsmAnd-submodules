@@ -39,10 +39,10 @@ gradle build
 echo "list core aar without assembleRelease:"
 ls -la build/outputs/aar/*.aar
 ls -la NativeCore*/build/outputs/aar/*.aar
-gradle assembleRelease
-echo "list core aar with assembleRelease:"
-ls -la build/outputs/aar/*.aar
-ls -la NativeCore*/build/outputs/aar/*.aar
+#gradle assembleRelease
+#echo "list core aar with assembleRelease:"
+#ls -la build/outputs/aar/*.aar
+#ls -la NativeCore*/build/outputs/aar/*.aar
 cp build/outputs/aar/OsmAndCore_android-release.aar "$osmand_dir/libs/"
 cp NativeCoreRelease/build/outputs/aar/OsmAndCore_androidNativeRelease-release.aar "$osmand_dir/libs/"
 popd
