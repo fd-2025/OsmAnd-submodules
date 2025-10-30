@@ -41,8 +41,8 @@ echo "Core assembleRelease dry run END"
 #ls -la NativeCore*/build/outputs/aar/*.aar
 gradle assembleRelease
 echo "list core aar assembleRelease #1:"
-els -la build/outputs/aar/*.aar
-els -la NativeCore*/build/outputs/aar/*.aar
+ls -la build/outputs/aar/*.aar
+ls -la NativeCore*/build/outputs/aar/*.aar
 gradle assembleRelease
 echo "list core aar assembleRelease #2:"
 ls -la build/outputs/aar/*.aar
