@@ -35,14 +35,14 @@ echo "Core build dry run END"
 echo "Core assembleRelease dry run BEGIN"
 gradle assembleRelease --dry-run
 echo "Core assembleRelease dry run END"
-#gradle build
-#echo "list core aar without assembleRelease:"
-#ls -la build/outputs/aar/*.aar
-#ls -la NativeCore*/build/outputs/aar/*.aar
-gradle assembleRelease
-echo "list core aar assembleRelease #1:"
+gradle build
+echo "list core aar without assembleRelease:"
 ls -la build/outputs/aar/*.aar
 ls -la NativeCore*/build/outputs/aar/*.aar
+#gradle assembleRelease
+#echo "list core aar assembleRelease #1:"
+#ls -la build/outputs/aar/*.aar
+#ls -la NativeCore*/build/outputs/aar/*.aar
 gradle assembleRelease
 echo "list core aar assembleRelease #2:"
 ls -la build/outputs/aar/*.aar
