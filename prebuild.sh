@@ -582,6 +582,15 @@ fi
 #> // project(":NativeCoreDebug").name = "OsmAndCore_androidNativeDebug"
 #EOF
 
+patch "$core_dir/wrappers/android/build.gradle" <<-'EOF'
+68,72d67
+<         debug {
+<             debuggable true
+<             jniDebuggable true
+<             buildConfigField "boolean", "USE_DEBUG_LIBRARIES", "true"
+<         }
+EOF
+
 # return from whence we came (just in case)
 popd
 

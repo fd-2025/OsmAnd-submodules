@@ -32,9 +32,13 @@ pushd core/wrappers/android/
 echo "Core build dry run BEGIN"
 gradle build --dry-run
 echo "Core build dry run END"
-echo "Core assembleRelease dry run BEGIN"
-gradle assembleRelease --dry-run
-echo "Core assembleRelease dry run END"
+echo "Core build dry run x1 BEGIN"
+gradle build -x :OsmAndCore_androidNativeDebug:build --dry-run
+echo "Core build dry run x1 END"
+echo "Core build dry run x2 BEGIN"
+gradle build -x :OsmAndCore_androidNativeDebug:build -x :OsmAndCore_androidNativeDebug:assembleRelease --dry-run
+echo "Core build dry run x2 END"
+
 # build, assemble so that native libs are included
 gradle build -x :OsmAndCore_androidNativeDebug:build -x :OsmAndCore_androidNativeDebug:assembleRelease
 echo "list core aar without assembleRelease:"
@@ -44,6 +48,17 @@ ls -la NativeCore*/build/outputs/aar/*.aar
 #echo "list core aar assembleRelease #1:"
 #ls -la build/outputs/aar/*.aar
 #ls -la NativeCore*/build/outputs/aar/*.aar
+
+echo "Core assembleRelease dry run BEGIN"
+gradle assembleRelease --dry-run
+echo "Core assembleRelease dry run END"
+echo "Core assembleRelease dry run x1 BEGIN"
+gradle assembleRelease -x :OsmAndCore_androidNativeDebug:assembleRelease --dry-run
+echo "Core assembleRelease dry run x1 END"
+echo "Core assembleRelease dry run x2 BEGIN"
+gradle assembleRelease -x :OsmAndCore_androidNativeDebug:build -x :OsmAndCore_androidNativeDebug:assembleRelease --dry-run
+echo "Core assembleRelease dry run x2 END"
+
 gradle assembleRelease -x :OsmAndCore_androidNativeDebug:build -x :OsmAndCore_androidNativeDebug:assembleRelease
 echo "list core aar assembleRelease #2:"
 ls -la build/outputs/aar/*.aar
