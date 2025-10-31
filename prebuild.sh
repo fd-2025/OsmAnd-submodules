@@ -366,6 +366,10 @@ addCheckSum \
     "$core_dir/externals/sqlite/configure.sh"
 
 addCheckSum \
+    a443aaf5cf345613492efa679ef1c9cc31ba109dcdf37ee377f61ab500d042fe \
+    "$core_legacy_dir/externals/sqlite/configure.sh"
+
+addCheckSum \
     c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1 \
     "$core_dir/externals/zlib/configure.sh"
 
