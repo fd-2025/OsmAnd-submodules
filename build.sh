@@ -36,7 +36,7 @@ echo "Core assembleRelease dry run BEGIN"
 gradle assembleRelease --dry-run
 echo "Core assembleRelease dry run END"
 # build, assemble so that native libs are included
-gradle build
+gradle build -x :OsmAndCore_androidNativeDebug:build -x :OsmAndCore_androidNativeDebug:assembleRelease
 echo "list core aar without assembleRelease:"
 ls -la build/outputs/aar/*.aar
 ls -la NativeCore*/build/outputs/aar/*.aar
@@ -44,7 +44,7 @@ ls -la NativeCore*/build/outputs/aar/*.aar
 #echo "list core aar assembleRelease #1:"
 #ls -la build/outputs/aar/*.aar
 #ls -la NativeCore*/build/outputs/aar/*.aar
-gradle assembleRelease
+gradle assembleRelease -x :OsmAndCore_androidNativeDebug:build -x :OsmAndCore_androidNativeDebug:assembleRelease
 echo "list core aar assembleRelease #2:"
 ls -la build/outputs/aar/*.aar
 ls -la NativeCore*/build/outputs/aar/*.aar
