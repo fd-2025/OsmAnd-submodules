@@ -573,6 +573,15 @@ then
 	EOF
 fi
 
+patch "$core_dir/wrappers/android/settings.gradle" <<-'EOF'
+9,10c9,10
+< include ":NativeCoreDebug"
+< project(":NativeCoreDebug").name = "OsmAndCore_androidNativeDebug"
+---
+> // include ":NativeCoreDebug"
+> // project(":NativeCoreDebug").name = "OsmAndCore_androidNativeDebug"
+EOF
+
 # return from whence we came (just in case)
 popd
 

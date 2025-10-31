@@ -35,6 +35,7 @@ echo "Core build dry run END"
 echo "Core assembleRelease dry run BEGIN"
 gradle assembleRelease --dry-run
 echo "Core assembleRelease dry run END"
+# build, assemble so that native libs are included
 gradle build
 echo "list core aar without assembleRelease:"
 ls -la build/outputs/aar/*.aar
