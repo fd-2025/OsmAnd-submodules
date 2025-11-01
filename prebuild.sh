@@ -643,6 +643,17 @@ patch "$core_dir/wrappers/android/NativeCore/build.gradle" <<-'EOF'
  // OsmAndCore JNI build task
 EOF
 
+patch "$core_dir/wrappers/android/settings.gradle" <<-'EOF'
+@@ -6,5 +6,5 @@
+ include ":NativeCoreRelease"
+ project(":NativeCoreRelease").name = "OsmAndCore_androidNativeRelease"
+ 
+-include ":NativeCoreDebug"
+-project(":NativeCoreDebug").name = "OsmAndCore_androidNativeDebug"
++//include ":NativeCoreDebug"
++//project(":NativeCoreDebug").name = "OsmAndCore_androidNativeDebug"
+EOF
+
 # return from whence we came (just in case)
 popd
 
