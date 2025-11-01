@@ -47,10 +47,12 @@ echo "Core assembleRelease dry run BEGIN"
 gradle assembleRelease --dry-run
 echo "Core assembleRelease dry run END"
 echo "Core assembleRelease dry run -x BEGIN"
-gradle assembleRelease -x :OsmAndCore_androidNativeDebug:assembleRelease -x :swigGenerateJava -x :OsmAndCore_androidNative:buildOsmAndCore --dry-run
+#gradle assembleRelease -x :OsmAndCore_androidNativeDebug:assembleRelease -x :swigGenerateJava -x :OsmAndCore_androidNative:buildOsmAndCore --dry-run
+gradle assembleRelease -x :swigGenerateJava -x :OsmAndCore_androidNative:buildOsmAndCore --dry-run
 echo "Core assembleRelease dry run -x END"
 
-gradle assembleRelease -x :OsmAndCore_androidNativeDebug:assembleRelease -x :swigGenerateJava -x :OsmAndCore_androidNative:buildOsmAndCore
+#gradle assembleRelease -x :OsmAndCore_androidNativeDebug:assembleRelease -x :swigGenerateJava -x :OsmAndCore_androidNative:buildOsmAndCore
+gradle assembleRelease -x :swigGenerateJava -x :OsmAndCore_androidNative:buildOsmAndCore
 echo "list core aar assembleRelease:"
 ls -la build/outputs/aar/*.aar
 ls -la NativeCore*/build/outputs/aar/*.aar
