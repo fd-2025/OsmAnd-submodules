@@ -50,7 +50,7 @@ gradle assembleRelease -x :OsmAndCore_androidNativeDebug:assembleRelease -x :swi
 echo "Core assembleRelease dry run -x END"
 
 gradle assembleRelease -x :OsmAndCore_androidNativeDebug:assembleRelease -x :swigGenerateJava -x :OsmAndCore_androidNative:buildOsmAndCore
-echo "list core aar assembleRelease2:"
+echo "list core aar assembleRelease:"
 ls -la build/outputs/aar/*.aar
 ls -la NativeCore*/build/outputs/aar/*.aar
 cp build/outputs/aar/OsmAndCore_android-release.aar "$osmand_dir/libs/"

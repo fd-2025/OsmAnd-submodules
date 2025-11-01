@@ -595,6 +595,54 @@ fi
 #<         }
 #EOF
 
+patch "$core_dir/wrappers/android/build.gradle" <<-'EOF'
+@@ -64,6 +64,12 @@
+         abortOnError false
+     }
+ 
++    variantFilter { variant ->
++        if (variant.buildType.name == 'debug') {
++            setIgnore(true)
++        }
++    }
++
+     buildTypes {
+         debug {
+             debuggable true
+EOF
+
+patch "$core_dir/wrappers/android/NativeCoreRelease/build.gradle" <<-'EOF'
+@@ -34,6 +34,12 @@
+         // Don't compress any resources
+         noCompress "qz", "png"
+     }
++
++    variantFilter { variant ->
++        if (variant.buildType.name == 'debug') {
++            setIgnore(true)
++        }
++    }
+ }
+ 
+ // OsmAnd libraries tasks
+EOF
+
+patch "$core_dir/wrappers/android/NativeCore/build.gradle" <<-'EOF'
+@@ -35,6 +35,12 @@
+ 		// Don't compress any resources
+ 		noCompress "qz", "png"
+ 	}
++
++    variantFilter { variant ->
++        if (variant.buildType.name == 'debug') {
++            setIgnore(true)
++        }
++    }
+ }
+ 
+ // OsmAndCore JNI build task
+EOF
+
 # return from whence we came (just in case)
 popd
 
