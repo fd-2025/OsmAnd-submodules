@@ -586,14 +586,14 @@ fi
 #> // project(":NativeCoreDebug").name = "OsmAndCore_androidNativeDebug"
 #EOF
 
-#patch "$core_dir/wrappers/android/build.gradle" <<-'EOF'
-#68,72d67
-#<         debug {
-#<             debuggable true
-#<             jniDebuggable true
-#<             buildConfigField "boolean", "USE_DEBUG_LIBRARIES", "true"
-#<         }
-#EOF
+patch "$core_dir/wrappers/android/build.gradle" <<-'EOF'
+68,72d67
+<         debug {
+<             debuggable true
+<             jniDebuggable true
+<             buildConfigField "boolean", "USE_DEBUG_LIBRARIES", "true"
+<         }
+EOF
 
 patch "$core_dir/wrappers/android/build.gradle" <<-'EOF'
 @@ -64,6 +64,12 @@
@@ -641,17 +641,6 @@ patch "$core_dir/wrappers/android/NativeCore/build.gradle" <<-'EOF'
  }
  
  // OsmAndCore JNI build task
-EOF
-
-patch "$core_dir/wrappers/android/settings.gradle" <<-'EOF'
-@@ -6,5 +6,5 @@
- include ":NativeCoreRelease"
- project(":NativeCoreRelease").name = "OsmAndCore_androidNativeRelease"
- 
--include ":NativeCoreDebug"
--project(":NativeCoreDebug").name = "OsmAndCore_androidNativeDebug"
-+//include ":NativeCoreDebug"
-+//project(":NativeCoreDebug").name = "OsmAndCore_androidNativeDebug"
 EOF
 
 # return from whence we came (just in case)
