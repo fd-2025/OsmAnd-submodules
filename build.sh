@@ -32,12 +32,13 @@ pushd core/wrappers/android/
 echo "Core build dry run BEGIN"
 gradle build --dry-run
 echo "Core build dry run END"
-echo "Core build dry run -x BEGIN"
-gradle build -x :OsmAndCore_androidNativeDebug:build --dry-run
-echo "Core build dry run -x END"
+##echo "Core build dry run -x BEGIN"
+##gradle build -x :OsmAndCore_androidNativeDebug:build --dry-run
+##echo "Core build dry run -x END"
 
 # build, assemble so that native libs are included
-gradle build -x :OsmAndCore_androidNativeDebug:build
+##gradle build -x :OsmAndCore_androidNativeDebug:build
+gradle build
 echo "list core aar without assembleRelease:"
 ls -la build/outputs/aar/*.aar
 ls -la NativeCore*/build/outputs/aar/*.aar

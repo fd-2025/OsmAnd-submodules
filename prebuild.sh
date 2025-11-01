@@ -577,14 +577,14 @@ then
 	EOF
 fi
 
-#patch "$core_dir/wrappers/android/settings.gradle" <<-'EOF'
-#9,10c9,10
-#< include ":NativeCoreDebug"
-#< project(":NativeCoreDebug").name = "OsmAndCore_androidNativeDebug"
-#---
-#> // include ":NativeCoreDebug"
-#> // project(":NativeCoreDebug").name = "OsmAndCore_androidNativeDebug"
-#EOF
+patch "$core_dir/wrappers/android/settings.gradle" <<-'EOF'
+9,10c9,10
+< include ":NativeCoreDebug"
+< project(":NativeCoreDebug").name = "OsmAndCore_androidNativeDebug"
+---
+> // include ":NativeCoreDebug"
+> // project(":NativeCoreDebug").name = "OsmAndCore_androidNativeDebug"
+EOF
 
 patch "$core_dir/wrappers/android/build.gradle" <<-'EOF'
 68,72d67
