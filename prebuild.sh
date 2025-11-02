@@ -636,10 +636,14 @@ patch "$core_dir/wrappers/android/build.gradle" <<-'EOF'
  
      duplicatesStrategy = DuplicatesStrategy.EXCLUDE
  
-@@ -289,31 +292,36 @@
+@@ -289,28 +292,37 @@
      }
  }
  
++//tasks.named("compileReleaseJavaWithJavac") {
++//    dependsOn swigGenerateJava
++//}
++
 +tasks.named("assemble") {
 +    dependsOn copyNdkSharedLibs, copyQtSharedLibs, copyQtJarLibs
 +}
@@ -667,23 +671,14 @@ patch "$core_dir/wrappers/android/build.gradle" <<-'EOF'
      }
  }
  
--afterEvaluate {
--    android.libraryVariants.configureEach { variant ->
--        variant.javaCompileProvider.configure {
+ afterEvaluate {
+     android.libraryVariants.configureEach { variant ->
+         variant.javaCompileProvider.configure {
 -            dependsOn swigGenerateJava, indexOsmAndResources, packOsmAndResources, copyNdkSharedLibs, copyQtSharedLibs, copyQtJarLibs
--        }
--    }
--}
-+//afterEvaluate {
-+//    android.libraryVariants.configureEach { variant ->
-+//        variant.javaCompileProvider.configure {
-+//            dependsOn swigGenerateJava, indexOsmAndResources, packOsmAndResources//, copyNdkSharedLibs, copyQtSharedLibs, copyQtJarLibs
-+//        }
-+//    }
-+//}
- 
- dependencies {
-     implementation fileTree(dir: "libs", include: ["**/*.jar"])
++            dependsOn swigGenerateJava, indexOsmAndResources, packOsmAndResources//, copyNdkSharedLibs, copyQtSharedLibs, copyQtJarLibs
+         }
+     }
+ }
 EOF
 
 patch "$core_dir/wrappers/android/NativeCoreRelease/build.gradle" <<-'EOF'
