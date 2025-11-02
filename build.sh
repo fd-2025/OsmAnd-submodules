@@ -52,7 +52,7 @@ gradle assembleRelease -x :swigGenerateJava -x :OsmAndCore_androidNative:buildOs
 echo "Core assembleRelease dry run -x END"
 
 #gradle assembleRelease -x :OsmAndCore_androidNativeDebug:assembleRelease -x :swigGenerateJava -x :OsmAndCore_androidNative:buildOsmAndCore
-gradle assembleRelease -x :swigGenerateJava -x :OsmAndCore_androidNative:buildOsmAndCore
+########gradle assembleRelease -x :swigGenerateJava -x :OsmAndCore_androidNative:buildOsmAndCore
 echo "list core aar assembleRelease:"
 ls -la build/outputs/aar/*.aar
 ls -la NativeCore*/build/outputs/aar/*.aar
