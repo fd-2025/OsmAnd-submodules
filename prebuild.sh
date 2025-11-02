@@ -640,14 +640,15 @@ patch "$core_dir/wrappers/android/build.gradle" <<-'EOF'
      }
  }
  
-+tasks.named("assemble") {
-+    dependsOn copyNdkSharedLibs, copyQtSharedLibs, copyQtJarLibs
-+}
++//tasks.named("assemble") {
++//    dependsOn copyNdkSharedLibs, copyQtSharedLibs, copyQtJarLibs
++//}
 +
  android.libraryVariants.all { variant ->
      tasks.named("package${variant.name.capitalize()}Assets").configure {
-+        //dependsOn copyOsmAndResources, indexOsmAndResources, packOsmAndResources, copyNdkSharedLibs, copyQtSharedLibs, copyQtJarLibs
-         dependsOn copyOsmAndResources, indexOsmAndResources, packOsmAndResources
+-        dependsOn copyOsmAndResources, indexOsmAndResources, packOsmAndResources
++        dependsOn copyOsmAndResources, indexOsmAndResources, packOsmAndResources, copyNdkSharedLibs, copyQtSharedLibs, copyQtJarLibs
++        //dependsOn copyOsmAndResources, indexOsmAndResources, packOsmAndResources
      }
      tasks.named("merge${variant.name.capitalize()}JniLibFolders").configure {
 -        dependsOn copyNdkSharedLibs, copyQtSharedLibs
