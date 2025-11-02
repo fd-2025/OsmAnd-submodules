@@ -611,6 +611,81 @@ patch "$core_dir/wrappers/android/build.gradle" <<-'EOF'
              debuggable true
 EOF
 
+patch "$core_dir/wrappers/android/build.gradle" <<-'EOF'
+@@ -106,6 +106,7 @@
+ tasks.register('copyNdkSharedLibs', Copy) {
+     description = "Copy NDK shared libraries"
+     dependsOn cleanupNdkSharedLibs
++    mustRunAfter("OsmAndCore_androidNative:buildOsmAndCore")
+ 
+     def ndkRoot = System.getenv("ANDROID_NDK")
+ 
+@@ -151,6 +152,7 @@
+ tasks.register('copyQtSharedLibs', Copy) {
+     description "Copy Qt shared libraries"
+     dependsOn cleanupQtSharedLibs
++    mustRunAfter("OsmAndCore_androidNative:buildOsmAndCore")
+ 
+     from("../../externals/qtbase-android") {
+         include "upstream.patched.android.clang-*.shared/lib/libQt5Core.so"
+@@ -174,6 +176,7 @@
+ tasks.register('copyQtJarLibs', Copy) {
+     description "Copy Qt JAR libraries"
+     dependsOn cleanupQtJarLibs
++    mustRunAfter("OsmAndCore_androidNative:buildOsmAndCore")
+ 
+     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+ 
+@@ -289,31 +292,36 @@
+     }
+ }
+ 
++tasks.named("assemble") {
++    dependsOn copyNdkSharedLibs, copyQtSharedLibs, copyQtJarLibs
++}
++
+ android.libraryVariants.all { variant ->
+     tasks.named("package${variant.name.capitalize()}Assets").configure {
++        //dependsOn copyOsmAndResources, indexOsmAndResources, packOsmAndResources, copyNdkSharedLibs, copyQtSharedLibs, copyQtJarLibs
+         dependsOn copyOsmAndResources, indexOsmAndResources, packOsmAndResources
+     }
+     tasks.named("merge${variant.name.capitalize()}JniLibFolders").configure {
+-        dependsOn copyNdkSharedLibs, copyQtSharedLibs
++        //dependsOn copyNdkSharedLibs, copyQtSharedLibs
+     }
+     tasks.named("extract${variant.name.capitalize()}Annotations").configure {
+-        dependsOn swigGenerateJava, copyQtJarLibs
++        dependsOn swigGenerateJava//, copyQtJarLibs
+     }
+     tasks.named("merge${variant.name.capitalize()}JavaResource").configure {
+-        dependsOn copyQtJarLibs
++        //dependsOn copyQtJarLibs
+     }
+     tasks.named("copy${variant.name.capitalize()}JniLibsProjectAndLocalJars").configure {
+-        dependsOn copyQtJarLibs
++        //dependsOn copyQtJarLibs
+     }
+ }
+ 
+-afterEvaluate {
+-    android.libraryVariants.configureEach { variant ->
+-        variant.javaCompileProvider.configure {
+-            dependsOn swigGenerateJava, indexOsmAndResources, packOsmAndResources, copyNdkSharedLibs, copyQtSharedLibs, copyQtJarLibs
+-        }
+-    }
+-}
++//afterEvaluate {
++//    android.libraryVariants.configureEach { variant ->
++//        variant.javaCompileProvider.configure {
++//            dependsOn swigGenerateJava, indexOsmAndResources, packOsmAndResources//, copyNdkSharedLibs, copyQtSharedLibs, copyQtJarLibs
++//        }
++//    }
++//}
+ 
+ dependencies {
+     implementation fileTree(dir: "libs", include: ["**/*.jar"])
+EOF
+
 patch "$core_dir/wrappers/android/NativeCoreRelease/build.gradle" <<-'EOF'
 @@ -34,6 +34,12 @@
          // Don't compress any resources
