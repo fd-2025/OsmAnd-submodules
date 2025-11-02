@@ -636,14 +636,10 @@ patch "$core_dir/wrappers/android/build.gradle" <<-'EOF'
  
      duplicatesStrategy = DuplicatesStrategy.EXCLUDE
  
-@@ -289,28 +292,37 @@
+@@ -289,32 +292,40 @@
      }
  }
  
-+//tasks.named("compileReleaseJavaWithJavac") {
-+//    dependsOn swigGenerateJava
-+//}
-+
 +tasks.named("assemble") {
 +    dependsOn copyNdkSharedLibs, copyQtSharedLibs, copyQtJarLibs
 +}
@@ -669,16 +665,29 @@ patch "$core_dir/wrappers/android/build.gradle" <<-'EOF'
 -        dependsOn copyQtJarLibs
 +        //dependsOn copyQtJarLibs
      }
- }
- 
- afterEvaluate {
-     android.libraryVariants.configureEach { variant ->
-         variant.javaCompileProvider.configure {
+-}
+-
+-afterEvaluate {
+-    android.libraryVariants.configureEach { variant ->
+-        variant.javaCompileProvider.configure {
 -            dependsOn swigGenerateJava, indexOsmAndResources, packOsmAndResources, copyNdkSharedLibs, copyQtSharedLibs, copyQtJarLibs
-+            dependsOn swigGenerateJava, indexOsmAndResources, packOsmAndResources//, copyNdkSharedLibs, copyQtSharedLibs, copyQtJarLibs
-         }
+-        }
++    tasks.named("compile${variant.name.capitalize()}JavaWithJavac").configure {
++        dependsOn swigGenerateJava
      }
  }
+ 
++//afterEvaluate {
++//    android.libraryVariants.configureEach { variant ->
++//        variant.javaCompileProvider.configure {
++//            dependsOn swigGenerateJava, indexOsmAndResources, packOsmAndResources//, copyNdkSharedLibs, copyQtSharedLibs, copyQtJarLibs
++//        }
++//    }
++//}
++
+ dependencies {
+     implementation fileTree(dir: "libs", include: ["**/*.jar"])
+     implementation project(":OsmAndCore_androidNative")
 EOF
 
 patch "$core_dir/wrappers/android/NativeCoreRelease/build.gradle" <<-'EOF'
