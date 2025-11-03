@@ -659,7 +659,7 @@ patch "$core_dir/wrappers/android/build.gradle" <<-'EOF'
 -            dependsOn swigGenerateJava, indexOsmAndResources, packOsmAndResources, copyNdkSharedLibs, copyQtSharedLibs, copyQtJarLibs
 -        }
 +    tasks.named("compile${variant.name.capitalize()}JavaWithJavac").configure {
-+        dependsOn swigGenerateJava
++        dependsOn swigGenerateJava, copyQtJarLibs
      }
  }
  
