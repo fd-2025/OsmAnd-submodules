@@ -36,7 +36,7 @@ icu_dir="$script_dir/icu-release-50-2-1-patched-mirror"
 sdkmanager "platforms;android-31"
 
 # BUILD: Add the ANDROID_SDK export because the auto-detection in src/corelib/Qt5AndroidSupport.cmake (qtbase-android) fails. This is due to our SDK/NDK paths being structured as .../sdk/ndk/<ndk-version>, whereas .../sdk/ndk is expected.
-sed -i '/set(ANDROID_SDK_BUILD_TOOLS_REVISION "$ENV{ANDROID_SDK_BUILD_TOOLS_REVISION}")/a set(ANDROID_SDK "$ENV{ANDROID_HOME}" CACHE STRING "Android SDK path")' "$build_dir/targets/android-ndk-clang.cmake"
+#sed -i '/set(ANDROID_SDK_BUILD_TOOLS_REVISION "$ENV{ANDROID_SDK_BUILD_TOOLS_REVISION}")/a set(ANDROID_SDK "$ENV{ANDROID_HOME}" CACHE STRING "Android SDK path")' "$build_dir/targets/android-ndk-clang.cmake"
 
 # BUILD: Add enough memory for the build on FDroid
 echo -e "\norg.gradle.jvmargs=-XX:MaxHeapSize=4096m" \
@@ -611,32 +611,6 @@ patch "$core_dir/wrappers/android/build.gradle" <<-'EOF'
              debuggable true
 EOF
 
-patch "$core_dir/wrappers/android/build.gradle" <<-'EOF'
-@@ -106,6 +106,7 @@
- tasks.register('copyNdkSharedLibs', Copy) {
-     description = "Copy NDK shared libraries"
-     dependsOn cleanupNdkSharedLibs
-+    mustRunAfter("OsmAndCore_androidNative:buildOsmAndCore")
- 
-     def ndkRoot = System.getenv("ANDROID_NDK")
- 
-@@ -151,6 +152,7 @@
- tasks.register('copyQtSharedLibs', Copy) {
-     description "Copy Qt shared libraries"
-     dependsOn cleanupQtSharedLibs
-+    mustRunAfter("OsmAndCore_androidNative:buildOsmAndCore")
- 
-     from("../../externals/qtbase-android") {
-         include "upstream.patched.android.clang-*.shared/lib/libQt5Core.so"
-@@ -174,6 +176,7 @@
- tasks.register('copyQtJarLibs', Copy) {
-     description "Copy Qt JAR libraries"
-     dependsOn cleanupQtJarLibs
-+    mustRunAfter("OsmAndCore_androidNative:buildOsmAndCore")
- 
-     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-EOF
-
 patch "$core_dir/wrappers/android/NativeCoreRelease/build.gradle" <<-'EOF'
 @@ -34,6 +34,12 @@
          // Don't compress any resources
@@ -667,6 +641,32 @@ patch "$core_dir/wrappers/android/NativeCore/build.gradle" <<-'EOF'
  }
  
  // OsmAndCore JNI build task
+EOF
+
+patch "$core_dir/wrappers/android/build.gradle" <<-'EOF'
+@@ -106,6 +106,7 @@
+ tasks.register('copyNdkSharedLibs', Copy) {
+     description = "Copy NDK shared libraries"
+     dependsOn cleanupNdkSharedLibs
++    mustRunAfter("OsmAndCore_androidNative:buildOsmAndCore")
+ 
+     def ndkRoot = System.getenv("ANDROID_NDK")
+ 
+@@ -151,6 +152,7 @@
+ tasks.register('copyQtSharedLibs', Copy) {
+     description "Copy Qt shared libraries"
+     dependsOn cleanupQtSharedLibs
++    mustRunAfter("OsmAndCore_androidNative:buildOsmAndCore")
+ 
+     from("../../externals/qtbase-android") {
+         include "upstream.patched.android.clang-*.shared/lib/libQt5Core.so"
+@@ -174,6 +176,7 @@
+ tasks.register('copyQtJarLibs', Copy) {
+     description "Copy Qt JAR libraries"
+     dependsOn cleanupQtJarLibs
++    mustRunAfter("OsmAndCore_androidNative:buildOsmAndCore")
+ 
+     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 EOF
 
 # return from whence we came (just in case)
