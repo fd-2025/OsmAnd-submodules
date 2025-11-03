@@ -635,45 +635,6 @@ patch "$core_dir/wrappers/android/build.gradle" <<-'EOF'
 +    mustRunAfter("OsmAndCore_androidNative:buildOsmAndCore")
  
      duplicatesStrategy = DuplicatesStrategy.EXCLUDE
- 
-@@ -289,6 +292,10 @@
-     }
- }
- 
-+//tasks.named("assemble") {
-+//    dependsOn copyNdkSharedLibs, copyQtSharedLibs, copyQtJarLibs
-+//}
-+
- android.libraryVariants.all { variant ->
-     tasks.named("package${variant.name.capitalize()}Assets").configure {
-         dependsOn copyOsmAndResources, indexOsmAndResources, packOsmAndResources
-@@ -305,16 +312,19 @@
-     tasks.named("copy${variant.name.capitalize()}JniLibsProjectAndLocalJars").configure {
-         dependsOn copyQtJarLibs
-     }
--}
--
--afterEvaluate {
--    android.libraryVariants.configureEach { variant ->
--        variant.javaCompileProvider.configure {
--            dependsOn swigGenerateJava, indexOsmAndResources, packOsmAndResources, copyNdkSharedLibs, copyQtSharedLibs, copyQtJarLibs
--        }
-+    tasks.named("compile${variant.name.capitalize()}JavaWithJavac").configure {
-+        dependsOn swigGenerateJava, copyQtJarLibs
-     }
- }
- 
-+//afterEvaluate {
-+//    android.libraryVariants.configureEach { variant ->
-+//        variant.javaCompileProvider.configure {
-+//            dependsOn swigGenerateJava, indexOsmAndResources, packOsmAndResources//, copyNdkSharedLibs, copyQtSharedLibs, copyQtJarLibs
-+//        }
-+//    }
-+//}
-+
- dependencies {
-     implementation fileTree(dir: "libs", include: ["**/*.jar"])
-     implementation project(":OsmAndCore_androidNative")
 EOF
 
 patch "$core_dir/wrappers/android/NativeCoreRelease/build.gradle" <<-'EOF'
