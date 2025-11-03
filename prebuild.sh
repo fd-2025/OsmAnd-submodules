@@ -636,7 +636,7 @@ patch "$core_dir/wrappers/android/build.gradle" <<-'EOF'
  
      duplicatesStrategy = DuplicatesStrategy.EXCLUDE
  
-@@ -289,32 +292,40 @@
+@@ -289,32 +292,43 @@
      }
  }
  
@@ -675,6 +675,9 @@ patch "$core_dir/wrappers/android/build.gradle" <<-'EOF'
 -        }
 +    tasks.named("compile${variant.name.capitalize()}JavaWithJavac").configure {
 +        dependsOn swigGenerateJava
++    }
++    tasks.named("merge${variant.name.capitalize()}JniLibFolders").configure {
++        dependsOn copyNdkSharedLibs
      }
  }
  
