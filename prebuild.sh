@@ -636,7 +636,7 @@ patch "$core_dir/wrappers/android/build.gradle" <<-'EOF'
  
      duplicatesStrategy = DuplicatesStrategy.EXCLUDE
  
-@@ -289,32 +292,43 @@
+@@ -289,32 +292,40 @@
      }
  }
  
@@ -651,8 +651,7 @@ patch "$core_dir/wrappers/android/build.gradle" <<-'EOF'
 +        //dependsOn copyOsmAndResources, indexOsmAndResources, packOsmAndResources
      }
      tasks.named("merge${variant.name.capitalize()}JniLibFolders").configure {
--        dependsOn copyNdkSharedLibs, copyQtSharedLibs
-+        //dependsOn copyNdkSharedLibs, copyQtSharedLibs
+         dependsOn copyNdkSharedLibs, copyQtSharedLibs
      }
      tasks.named("extract${variant.name.capitalize()}Annotations").configure {
 -        dependsOn swigGenerateJava, copyQtJarLibs
@@ -675,9 +674,6 @@ patch "$core_dir/wrappers/android/build.gradle" <<-'EOF'
 -        }
 +    tasks.named("compile${variant.name.capitalize()}JavaWithJavac").configure {
 +        dependsOn swigGenerateJava
-+    }
-+    tasks.named("merge${variant.name.capitalize()}JniLibFolders").configure {
-+        dependsOn copyNdkSharedLibs
      }
  }
  
