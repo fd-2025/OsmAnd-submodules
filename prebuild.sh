@@ -636,7 +636,7 @@ patch "$core_dir/wrappers/android/build.gradle" <<-'EOF'
  
      duplicatesStrategy = DuplicatesStrategy.EXCLUDE
  
-@@ -289,32 +292,40 @@
+@@ -289,6 +292,10 @@
      }
  }
  
@@ -646,24 +646,10 @@ patch "$core_dir/wrappers/android/build.gradle" <<-'EOF'
 +
  android.libraryVariants.all { variant ->
      tasks.named("package${variant.name.capitalize()}Assets").configure {
--        dependsOn copyOsmAndResources, indexOsmAndResources, packOsmAndResources
-+        dependsOn copyOsmAndResources, indexOsmAndResources, packOsmAndResources, copyNdkSharedLibs, copyQtSharedLibs, copyQtJarLibs
-+        //dependsOn copyOsmAndResources, indexOsmAndResources, packOsmAndResources
-     }
-     tasks.named("merge${variant.name.capitalize()}JniLibFolders").configure {
-         dependsOn copyNdkSharedLibs, copyQtSharedLibs
-     }
-     tasks.named("extract${variant.name.capitalize()}Annotations").configure {
--        dependsOn swigGenerateJava, copyQtJarLibs
-+        dependsOn swigGenerateJava//, copyQtJarLibs
-     }
-     tasks.named("merge${variant.name.capitalize()}JavaResource").configure {
--        dependsOn copyQtJarLibs
-+        //dependsOn copyQtJarLibs
-     }
+         dependsOn copyOsmAndResources, indexOsmAndResources, packOsmAndResources
+@@ -305,16 +312,19 @@
      tasks.named("copy${variant.name.capitalize()}JniLibsProjectAndLocalJars").configure {
--        dependsOn copyQtJarLibs
-+        //dependsOn copyQtJarLibs
+         dependsOn copyQtJarLibs
      }
 -}
 -
