@@ -36,7 +36,7 @@ icu_dir="$script_dir/icu-release-50-2-1-patched-mirror"
 sdkmanager "platforms;android-31"
 
 # BUILD: Add the ANDROID_SDK export because the auto-detection in src/corelib/Qt5AndroidSupport.cmake (qtbase-android) fails. This is due to our SDK/NDK paths being structured as .../sdk/ndk/<ndk-version>, whereas .../sdk/ndk is expected.
-#sed -i '/set(ANDROID_SDK_BUILD_TOOLS_REVISION "$ENV{ANDROID_SDK_BUILD_TOOLS_REVISION}")/a set(ANDROID_SDK "$ENV{ANDROID_HOME}" CACHE STRING "Android SDK path")' "$build_dir/targets/android-ndk-clang.cmake"
+sed -i '/set(ANDROID_SDK_BUILD_TOOLS_REVISION "$ENV{ANDROID_SDK_BUILD_TOOLS_REVISION}")/a set(ANDROID_SDK "$ENV{ANDROID_HOME}" CACHE STRING "Android SDK path")' "$build_dir/targets/android-ndk-clang.cmake"
 
 # BUILD: Add enough memory for the build on FDroid
 echo -e "\norg.gradle.jvmargs=-XX:MaxHeapSize=4096m" \
@@ -577,71 +577,75 @@ then
 	EOF
 fi
 
-patch "$core_dir/wrappers/android/settings.gradle" <<-'EOF'
-9,10c9,10
-< include ":NativeCoreDebug"
-< project(":NativeCoreDebug").name = "OsmAndCore_androidNativeDebug"
----
-> // include ":NativeCoreDebug"
-> // project(":NativeCoreDebug").name = "OsmAndCore_androidNativeDebug"
-EOF
+# BUILD: Disable debug variant
 
-patch "$core_dir/wrappers/android/build.gradle" <<-'EOF'
-68,72d67
-<         debug {
-<             debuggable true
-<             jniDebuggable true
-<             buildConfigField "boolean", "USE_DEBUG_LIBRARIES", "true"
-<         }
-EOF
+# patch "$core_dir/wrappers/android/settings.gradle" <<-'EOF'
+# 9,10c9,10
+# < include ":NativeCoreDebug"
+# < project(":NativeCoreDebug").name = "OsmAndCore_androidNativeDebug"
+# ---
+# > // include ":NativeCoreDebug"
+# > // project(":NativeCoreDebug").name = "OsmAndCore_androidNativeDebug"
+# EOF
+# 
+# patch "$core_dir/wrappers/android/build.gradle" <<-'EOF'
+# 68,72d67
+# <         debug {
+# <             debuggable true
+# <             jniDebuggable true
+# <             buildConfigField "boolean", "USE_DEBUG_LIBRARIES", "true"
+# <         }
+# EOF
+# 
+# patch "$core_dir/wrappers/android/build.gradle" <<-'EOF'
+# @@ -64,6 +64,12 @@
+#          abortOnError false
+#      }
+#  
+# +    variantFilter { variant ->
+# +        if (variant.buildType.name == 'debug') {
+# +            setIgnore(true)
+# +        }
+# +    }
+# +
+#      buildTypes {
+#          debug {
+#              debuggable true
+# EOF
+# 
+# patch "$core_dir/wrappers/android/NativeCoreRelease/build.gradle" <<-'EOF'
+# @@ -34,6 +34,12 @@
+#          // Don't compress any resources
+#          noCompress "qz", "png"
+#      }
+# +
+# +    variantFilter { variant ->
+# +        if (variant.buildType.name == 'debug') {
+# +            setIgnore(true)
+# +        }
+# +    }
+#  }
+#  
+#  // OsmAnd libraries tasks
+# EOF
+# 
+# patch "$core_dir/wrappers/android/NativeCore/build.gradle" <<-'EOF'
+# @@ -35,6 +35,12 @@
+#  		// Don't compress any resources
+#  		noCompress "qz", "png"
+#  	}
+# +
+# +    variantFilter { variant ->
+# +        if (variant.buildType.name == 'debug') {
+# +            setIgnore(true)
+# +        }
+# +    }
+#  }
+#  
+#  // OsmAndCore JNI build task
+# EOF
 
-patch "$core_dir/wrappers/android/build.gradle" <<-'EOF'
-@@ -64,6 +64,12 @@
-         abortOnError false
-     }
- 
-+    variantFilter { variant ->
-+        if (variant.buildType.name == 'debug') {
-+            setIgnore(true)
-+        }
-+    }
-+
-     buildTypes {
-         debug {
-             debuggable true
-EOF
-
-patch "$core_dir/wrappers/android/NativeCoreRelease/build.gradle" <<-'EOF'
-@@ -34,6 +34,12 @@
-         // Don't compress any resources
-         noCompress "qz", "png"
-     }
-+
-+    variantFilter { variant ->
-+        if (variant.buildType.name == 'debug') {
-+            setIgnore(true)
-+        }
-+    }
- }
- 
- // OsmAnd libraries tasks
-EOF
-
-patch "$core_dir/wrappers/android/NativeCore/build.gradle" <<-'EOF'
-@@ -35,6 +35,12 @@
- 		// Don't compress any resources
- 		noCompress "qz", "png"
- 	}
-+
-+    variantFilter { variant ->
-+        if (variant.buildType.name == 'debug') {
-+            setIgnore(true)
-+        }
-+    }
- }
- 
- // OsmAndCore JNI build task
-EOF
+# BUILD: Fix the Gradle task order so that a gradle build is sufficient without running gradle assembleRelease
 
 patch "$core_dir/wrappers/android/build.gradle" <<-'EOF'
 @@ -106,6 +106,7 @@

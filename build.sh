@@ -24,7 +24,7 @@ popd
 # Build OsmAnd core and copy into libs folder
 
 pushd core/wrappers/android/
-gradle build
+gradle build -x :OsmAndCore_androidNativeDebug
 cp build/outputs/aar/OsmAndCore_android-release.aar "$osmand_dir/libs/"
 cp NativeCoreRelease/build/outputs/aar/OsmAndCore_androidNativeRelease-release.aar "$osmand_dir/libs/"
 popd
