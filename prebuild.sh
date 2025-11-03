@@ -616,7 +616,7 @@ patch "$core_dir/wrappers/android/build.gradle" <<-'EOF'
  tasks.register('copyNdkSharedLibs', Copy) {
      description = "Copy NDK shared libraries"
      dependsOn cleanupNdkSharedLibs
-+    mustRunAfter(OsmAndCore_androidNative:buildOsmAndCore)
++    mustRunAfter("OsmAndCore_androidNative:buildOsmAndCore")
  
      def ndkRoot = System.getenv("ANDROID_NDK")
  
@@ -624,7 +624,7 @@ patch "$core_dir/wrappers/android/build.gradle" <<-'EOF'
  tasks.register('copyQtSharedLibs', Copy) {
      description "Copy Qt shared libraries"
      dependsOn cleanupQtSharedLibs
-+    mustRunAfter(OsmAndCore_androidNative:buildOsmAndCore)
++    mustRunAfter("OsmAndCore_androidNative:buildOsmAndCore")
  
      from("../../externals/qtbase-android") {
          include "upstream.patched.android.clang-*.shared/lib/libQt5Core.so"
@@ -632,7 +632,7 @@ patch "$core_dir/wrappers/android/build.gradle" <<-'EOF'
  tasks.register('copyQtJarLibs', Copy) {
      description "Copy Qt JAR libraries"
      dependsOn cleanupQtJarLibs
-+    mustRunAfter(OsmAndCore_androidNative:buildOsmAndCore)
++    mustRunAfter("OsmAndCore_androidNative:buildOsmAndCore")
  
      duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 EOF
